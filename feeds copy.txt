@@ -1,0 +1,3 @@
+http://feeds.bbci.co.uk/news/rss.xml
+http://rss.cnn.com/rss/edition.rss
+https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
