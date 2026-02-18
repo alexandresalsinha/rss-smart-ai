@@ -66,85 +66,185 @@ async function exportToExcel(newsItems, outputFile) {
 }
 
 function exportToHTML(analysisText, htmlFile) {
-    const htmlContent = `
-<!DOCTYPE html>
+    // Parse articles from the text - split by numbered items
+    const articleMatches = analysisText.match(/\d+\.\s+.+?(?=\n\d+\.|$)/gs) || [];
+    const articlesHTML = articleMatches.map((article, index) => {
+        // Extract title (usually after the number, before parentheses or dash)
+        const titleMatch = article.match(/\d+\.\s+(.+?)(?:\n|$)/);
+        const title = titleMatch ? titleMatch[1].trim() : '';
+        
+        // Extract URL if present
+        const urlMatch = article.match(/(https?:\/\/[^\s\n]+)/);
+        const url = urlMatch ? urlMatch[1] : '';
+        
+        return `
+        <div class="article">
+            <div class="article-number">${index + 1}</div>
+            <h3 class="article-title">${title}</h3>
+            <div class="article-content">${article.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\d+\.\s+/, '').trim()}</div>
+            ${url ? `<a href="${url}" target="_blank" class="article-link">Read More →</a>` : ''}
+        </div>
+        `;
+    }).join('');
+
+    const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top News Analysis</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
-            margin: 0;
+            padding: 30px 20px;
+            line-height: 1.6;
+            color: #333;
         }
+        
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
+        }
+        
+        .header {
             background-color: white;
             padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
+        
         h1 {
-            text-align: center;
             color: #667eea;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
+        
         .date {
-            text-align: center;
-            color: #666;
-            font-size: 0.95em;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 15px;
+            color: #888;
+            font-size: 1.1em;
+            padding: 15px 0;
+            border-bottom: 2px solid #f0f0f0;
         }
-        .analysis-content {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 1em;
-            line-height: 1.8;
-        }
-        .article {
-            margin-bottom: 30px;
+        
+        .articles {
+            background-color: white;
             padding: 20px;
-            background-color: #f5f5f5;
-            border-left: 4px solid #667eea;
-            border-radius: 4px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
-        a {
-            color: #667eea;
-            text-decoration: none;
+        
+        .article {
+            padding: 30px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
         }
-        a:hover {
-            text-decoration: underline;
+        
+        .article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
         }
-        .footer {
-            margin-top: 40px;
+        
+        .article-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             text-align: center;
-            color: #999;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .article-title {
+            color: #333;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .article-content {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .article-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        
+        .article-link:hover {
+            background: #5568d3;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #ccc;
             font-size: 0.9em;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .header {
+                padding: 30px;
+            }
+            
+            .article {
+                padding: 20px;
+            }
+            
+            .article-title {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📰 Top News of the Day</h1>
-        <div class="date">Generated on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
-        <div class="analysis-content">${analysisText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+        <div class="header">
+            <h1>📰 Top News of the Day</h1>
+            <div class="date">Generated on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+        </div>
+        <div class="articles">
+            ${articlesHTML}
+        </div>
         <div class="footer">Analysis powered by OpenAI GPT-4</div>
     </div>
 </body>
-</html>
-    `;
+</html>`;
 
     fs.writeFileSync(htmlFile, htmlContent);
     console.log(`Analysis saved to ${htmlFile}`);
