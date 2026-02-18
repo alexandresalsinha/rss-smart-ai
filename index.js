@@ -65,6 +65,91 @@ async function exportToExcel(newsItems, outputFile) {
     console.log(`Exported ${newsItems.length} news items to ${outputFile}`);
 }
 
+function exportToHTML(analysisText, htmlFile) {
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top News Analysis</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .date {
+            text-align: center;
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+        .analysis-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+        .article {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #999;
+            font-size: 0.9em;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📰 Top News of the Day</h1>
+        <div class="date">Generated on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
+        <div class="analysis-content">${analysisText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+        <div class="footer">Analysis powered by OpenAI GPT-4</div>
+    </div>
+</body>
+</html>
+    `;
+
+    fs.writeFileSync(htmlFile, htmlContent);
+    console.log(`Analysis saved to ${htmlFile}`);
+}
+
 async function analyzeWithOpenAI(newsItems) {
     if (!process.env.OPENAI_API_KEY) {
         console.warn('Skipping OpenAI analysis: OPENAI_API_KEY not found in .env');
@@ -117,6 +202,10 @@ async function analyzeWithOpenAI(newsItems) {
         const analysisFile = 'top_news_analysis.txt';
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
+
+        // Export to HTML
+        const htmlFile = 'top_news_analysis.html';
+        exportToHTML(analysisResult, htmlFile);
 
     } catch (err) {
         console.error('Error during OpenAI analysis:', err.message);
