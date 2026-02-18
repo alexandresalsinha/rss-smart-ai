@@ -74,17 +74,20 @@ async function analyzeWithOpenAI(newsItems) {
     console.log('Analyzing news with OpenAI to find the Top 10...');
 
     // Prepare a simplified list for the prompt to save tokens
-    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${item.date.toISOString().split('T')[0]})`).join('\n');
+    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${item.date.toISOString().split('T')[0]}) - ${item.url}`).join('\n');
 
     const prompt = `
     Here is a list of news headlines from today:
     ${newsList}
 
-    Please identify the Top 20 most significant news items from this list.
+    Please identify the Top 30 most significant news items from this list.
     For each item, provide:
     - The original number from the list
     - The Title
+    - The Description
     - A brief reason why it is significant.
+    - The URL
+    
 
     You are helping me decide if this article is something I would be interested in reading. I am Alexandre Salsinha. I am interested in artificial intelligence, music technology, technology, gadgets, drones, vibe coding, investment markets, robotics, computer programming,  technology ,Cryptocurrency, music production, IT Security,  Virtual Reality and augmented really, and finally,health breakthroughs . I am also interested in any new developments with ChatGPT, Gemini, Claude, MCP, and Perplexity. I'm very interested in when AI collides with society in interesting ways, or cool stuff that everyday people can do with AI.
 
@@ -96,7 +99,7 @@ async function analyzeWithOpenAI(newsItems) {
 
     If there isn't enough information in the title and summary to decide if the article would be interesting to me, search for information on the topic to decide. 
     
-    Format the output as a numbered list with url´s included.
+    Format the output as a numbered list.
     `;
 
     try {
