@@ -75,8 +75,9 @@ function exportToHTML(analysisText, htmlFile) {
         
         // Extract URL if present
         const urlMatch = article.match(/(https?:\/\/[^\s\n]+)/);
-        const url = urlMatch ? urlMatch[1] : '';
+        const url = urlMatch ? urlMatch[1].slice(0, -2) : '';
         
+
         return `
         <div class="article">
             <div class="article-number">${index + 1}</div>
