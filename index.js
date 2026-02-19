@@ -41,6 +41,13 @@ function isToday(date) {
         date.getFullYear() === today.getFullYear();
 }
 
+function getDateStamp(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 async function exportToExcel(newsItems, outputFile) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Today\'s News');
@@ -251,7 +258,7 @@ function exportToHTML(analysisText, htmlFile) {
     console.log(`Analysis saved to ${htmlFile}`);
 }
 
-async function analyzeWithOpenAI(newsItems) {
+async function analyzeWithOpenAI(newsItems, dateStamp) {
     if (!process.env.OPENAI_API_KEY) {
         console.warn('Skipping OpenAI analysis: OPENAI_API_KEY not found in .env');
         return;
@@ -300,12 +307,12 @@ async function analyzeWithOpenAI(newsItems) {
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
-        const analysisFile = 'top_news_analysis.txt';
+        const analysisFile = `top_news_analysis_${dateStamp}.txt`;
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = 'top_news_analysis.html';
+        const htmlFile = `top_news_analysis_${dateStamp}.html`;
         exportToHTML(analysisResult, htmlFile);
 
     } catch (err) {
@@ -327,10 +334,11 @@ async function main() {
     const todaysNews = allNews.filter(item => isToday(item.date));
     console.log(`Found ${todaysNews.length} news items from today.`);
 
-    await exportToExcel(todaysNews, 'news_today.xlsx');
+    const dateStamp = getDateStamp();
+    await exportToExcel(todaysNews, `news_today_${dateStamp}.xlsx`);
 
     if (todaysNews.length > 0) {
-        await analyzeWithOpenAI(todaysNews);
+        await analyzeWithOpenAI(todaysNews, dateStamp);
     } else {
         console.log('No news from today to analyze.');
     }
