@@ -3,11 +3,14 @@ const Parser = require('rss-parser');
 const ExcelJS = require('exceljs');
 require('dotenv').config();
 const OpenAI = require('openai');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const parser = new Parser();
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function readFeeds(filePath) {
     try {
@@ -72,7 +75,7 @@ async function exportToExcel(newsItems, outputFile) {
     console.log(`Exported ${newsItems.length} news items to ${outputFile}`);
 }
 
-function exportToHTML(analysisText, htmlFile) {
+function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
     // Parse articles from the text - split by numbered items
     const articleMatches = analysisText.match(/\d+\.\s+.+?(?=\n\d+\.|$)/gs) || [];
     const articlesHTML = articleMatches.map((article, index) => {
@@ -82,7 +85,7 @@ function exportToHTML(analysisText, htmlFile) {
         
         // Extract URL if present
         const urlMatch = article.match(/(https?:\/\/[^\s\n]+)/);
-        const url = urlMatch ? urlMatch[1].slice(0, -2) : '';
+        const url = urlMatch ? urlMatch[1] : '';
         
 
         return `
@@ -249,7 +252,7 @@ function exportToHTML(analysisText, htmlFile) {
         <div class="articles">
             ${articlesHTML}
         </div>
-        <div class="footer">Analysis powered by OpenAI GPT-4</div>
+        <div class="footer">Analysis powered by ${provider}</div>
     </div>
 </body>
 </html>`;
@@ -258,20 +261,9 @@ function exportToHTML(analysisText, htmlFile) {
     console.log(`Analysis saved to ${htmlFile}`);
 }
 
-async function analyzeWithOpenAI(newsItems, dateStamp) {
-    if (!process.env.OPENAI_API_KEY) {
-        console.warn('Skipping OpenAI analysis: OPENAI_API_KEY not found in .env');
-        return;
-    }
-
-    console.log('Analyzing news with OpenAI to find the Top 10...');
-
-    // Prepare a simplified list for the prompt to save tokens
-    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${item.date.toISOString().split('T')[0]}) - ${item.url}`).join('\n');
-
-    const prompt = `
+const analysisPrompt = `
     Here is a list of news headlines from today:
-    ${newsList}
+    {newsList}
 
     Please identify the Top 30 most significant news items from this list.
     For each item, provide:
@@ -293,17 +285,28 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
     If there isn't enough information in the title and summary to decide if the article would be interesting to me, search for information on the topic to decide. 
     
     Format the output as a numbered list.
-    `;
+`;
+
+async function analyzeWithOpenAI(newsItems, dateStamp) {
+    if (!process.env.OPENAI_API_KEY) {
+        console.warn('Skipping OpenAI analysis: OPENAI_API_KEY not found in .env');
+        return;
+    }
+
+    console.log('Analyzing news with OpenAI to find the Top 30...');
+
+    // Prepare a simplified list for the prompt to save tokens
+    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${item.date.toISOString().split('T')[0]}) - ${item.url}`).join('\n');
+    const prompt = analysisPrompt.replace('{newsList}', newsList);
 
     try {
         const completion = await openai.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
-            // model: 'gpt-4o',
             model: 'gpt-4o',
         });
 
         const analysisResult = completion.choices[0].message.content;
-        console.log('\n--- Top 20 News of the Day ---\n');
+        console.log('\n--- Top 30 News of the Day (OpenAI) ---\n');
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
@@ -313,10 +316,52 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
 
         // Export to HTML
         const htmlFile = `top_news_analysis_${dateStamp}.html`;
-        exportToHTML(analysisResult, htmlFile);
+        exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o');
 
     } catch (err) {
         console.error('Error during OpenAI analysis:', err.message);
+    }
+}
+
+async function analyzeWithGemini(newsItems, dateStamp) {
+    if (!process.env.GEMINI_API_KEY) {
+        console.warn('Skipping Gemini analysis: GEMINI_API_KEY not found in .env');
+        return;
+    }
+
+    console.log('Analyzing news with Google Gemini to find the Top 30...');
+
+    // Prepare a simplified list for the prompt to save tokens
+    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${item.date.toISOString().split('T')[0]}) - ${item.url}`).join('\n');
+    const prompt = analysisPrompt.replace('{newsList}', newsList);
+
+    try {
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+        const result = await model.generateContent(prompt);
+        const analysisResult = result.response.text();
+        
+        console.log('\n--- Top 30 News of the Day (Gemini) ---\n');
+        console.log(analysisResult);
+        console.log('\n------------------------------\n');
+
+        const analysisFile = `top_news_analysis_gemini_${dateStamp}.txt`;
+        fs.writeFileSync(analysisFile, analysisResult);
+        console.log(`Analysis saved to ${analysisFile}`);
+
+        // Export to HTML
+        const htmlFile = `top_news_analysis_gemini_${dateStamp}.html`;
+        exportToHTML(analysisResult, htmlFile, 'Google Gemini');
+
+    } catch (err) {
+
+
+
+
+
+
+
+
+        console.error('Error during Gemini analysis:', err.message);
     }
 }
 
@@ -338,7 +383,24 @@ async function main() {
     await exportToExcel(todaysNews, `news_today_${dateStamp}.xlsx`);
 
     if (todaysNews.length > 0) {
-        await analyzeWithOpenAI(todaysNews, dateStamp);
+        // Get the API provider from command line argument
+        const apiProvider = process.argv[2]?.toLowerCase() || 'openai';
+        
+        if (apiProvider === 'gemini') {
+            await analyzeWithGemini(todaysNews, dateStamp);
+        } else if (apiProvider === 'openai') {
+            await analyzeWithOpenAI(todaysNews, dateStamp);
+        } else if (apiProvider === 'both') {
+            await analyzeWithOpenAI(todaysNews, dateStamp);
+            await analyzeWithGemini(todaysNews, dateStamp);
+        } else {
+            console.error(`Unknown API provider: ${apiProvider}`);
+            console.log('Usage: node index.js [openai|gemini|both]');
+            console.log('  openai (default) - Use OpenAI GPT-4o');
+            console.log('  gemini           - Use Google Gemini');
+            console.log('  both             - Use both APIs');
+            process.exit(1);
+        }
     } else {
         console.log('No news from today to analyze.');
     }
