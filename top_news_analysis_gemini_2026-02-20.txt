@@ -1,181 +1,181 @@
 Here are the Top 30 most significant news items from your list, tailored to your interests:
 
-1.  **Original Number:** 3
-    **Title:** Humans to travel further into space than ever before as Nasa confirms March Moon mission
-    **Description:** NASA has confirmed a March mission that will see humans venture further into space than previously achieved.
-    **Reason Why Significant:** This represents a significant advancement in space exploration technology and human endeavor, aligning with your interest in technology.
-    **URL:** https://www.bbc.com/news/articles/c86y1g6wde3o?at_medium=RSS&at_campaign=rss
+1.  **Original Number:** 51
+    **Title:** Elvis Presley regressa ao grande ecrã com concertos restaurados por inteligência artificial
+    **Description:** Elvis Presley is returning to the big screen with concerts that have been restored using artificial intelligence.
+    **Reason why it is significant:** This is a fantastic example of AI colliding with society, specifically in the realm of music and entertainment. It showcases AI's capability in music technology and restoration, which is directly relevant to your interest in artificial intelligence and music technology.
+    **URL:** https://sicnoticias.pt/programas/cartaz/2026-02-20-video-elvis-presley-regressa-ao-grande-ecra-com-concertos-restaurados-por-inteligencia-artificial-3f38b6ea
 
-2.  **Original Number:** 9
-    **Title:** UK agrees drone defence plan with four EU allies
-    **Description:** The UK has reached an agreement with four European Union allies on a joint drone defense strategy.
-    **Reason Why Significant:** Directly relevant to your interest in drones, this indicates developments in drone technology and its application in defense.
-    **URL:** https://www.bbc.com/news/articles/c875jj3y475o?at_medium=RSS&at_campaign=rss
+2.  **Original Number:** 61
+    **Title:** IA ajudou o Google Play a bloquear 1,75 milhões de apps maliciosas em 2025
+    **Description:** Artificial intelligence helped Google Play block 1.75 million malicious apps in 2025.
+    **Reason why it is significant:** This highlights a critical application of AI in IT security, demonstrating its effectiveness in combating cyber threats and protecting users. It's a significant development in how AI impacts society and improves digital safety.
+    **URL:** https://pplware.sapo.pt/google/ia-ajudou-o-google-play-a-bloquear-175-milhoes-de-apps-maliciosas-em-2025/
 
-3.  **Original Number:** 52
-    **Title:** Trump ordena divulgação de todos os arquivos sobre a vida extraterrestre após polémica com Obama
-    **Description:** Donald Trump has reportedly ordered the declassification of all files related to extraterrestrial life following a controversy involving Barack Obama.
-    **Reason Why Significant:** This is an interesting intersection of technology (potential advanced life), society, and politics, fitting your interest in how AI collides with society in interesting ways, and broader tech/societal impact.
-    **URL:** https://sicnoticias.pt/mundo/eua/2026-02-20-video-trump-ordena-divulgacao-de-todos-os-arquivos-sobre-a-vida-extraterrestre-apos-polemica-com-obama-f8c42728
-
-4.  **Original Number:** 59
+3.  **Original Number:** 63
     **Title:** Metaverso da Meta torna-se “mobile-first” para atrair mais utilizadores
-    **Description:** Meta's metaverse strategy is shifting to a "mobile-first" approach to attract a wider user base.
-    **Reason Why Significant:** This is a key development in the Metaverse and Virtual Reality/Augmented Reality space, aligning with your direct interest. The mobile-first approach could make it more accessible.
+    **Description:** Meta's Metaverse initiative is shifting to a "mobile-first" strategy to attract more users.
+    **Reason why it is significant:** This is a major strategic pivot for Meta's ambitious Metaverse project, indicating a new direction for Virtual Reality and Augmented Reality adoption. It's significant for understanding the evolution of VR/AR technology and its potential for wider societal integration.
     **URL:** https://pplware.sapo.pt/jogos/metaverso-da-meta-torna-se-mobile-first-para-atrair-mais-utilizadores/
 
-5.  **Original Number:** 60
-    **Title:** Life Below, criação de um mundo subaquático
-    **Description:** An article discussing the creation of an underwater world for "Life Below."
-    **Reason Why Significant:** If this article delves into the innovative technologies, rendering techniques, or programming methods used to create a realistic or immersive "underwater world," it would be highly relevant to your interests in computer programming, technology, and potentially VR/AR-adjacent experiences.
-    **URL:** https://pplware.sapo.pt/jogos/life-below-criacao-de-um-mundo-subaquatico/
+4.  **Original Number:** 72
+    **Title:** Sources: OpenAI is telling investors it's targeting ~$600B in total compute spend by 2030, months after Sam Altman touted $1.4T in infrastructure commitments (CNBC)
+    **Description:** OpenAI is reportedly telling investors about a target of approximately $600 billion in total compute spending by 2030, a significant figure following earlier higher infrastructure commitment talks by Sam Altman.
+    **Reason why it is significant:** This reveals the immense financial scale and strategic investment planned for AI infrastructure by a leading AI company (OpenAI), impacting investment markets and the future development of artificial intelligence. It also provides insight into the economics of advanced AI.
+    **URL:** http://www.techmeme.com/260220/p20#a260220p20
 
-6.  **Original Number:** 61
-    **Title:** Empresa encheu um bairro de tomadas nos passeios para carregar carros elétricos, mas…
-    **Description:** A company installed numerous charging sockets on sidewalks throughout a neighborhood for electric vehicles, with the title hinting at an unexpected outcome or challenge.
-    **Reason Why Significant:** This represents a practical application and challenge in urban technology infrastructure for electric vehicles, which are significant gadgets. It touches on innovation (or its challenges) in making EV charging accessible, aligning with your interest in technology and innovative gadgets.
-    **URL:** https://pplware.sapo.pt/motores/empresa-encheu-um-bairro-de-tomadas-nos-passeios-para-carregar-carros-eletricos-mas/
+5.  **Original Number:** 73
+    **Title:** Sources: OpenAI staff raised concerns about a Canadian mass shooting suspect months ago; OpenAI says her activity didn't meet the bar for reporting to police (Georgia Wells/Wall Street Journal)
+    **Description:** OpenAI staff reportedly raised concerns about a Canadian mass shooting suspect months prior, but the company determined her activity did not meet the criteria for reporting to police.
+    **Reason why it is significant:** This explores the intersection of AI with society, ethics, and IT security, particularly the difficult decisions companies like OpenAI face regarding user monitoring, privacy, and public safety. It highlights the challenges of content moderation and the societal impact of AI platforms.
+    **URL:** http://www.techmeme.com/260220/p19#a260220p19
 
-7.  **Original Number:** 64
-    **Title:** Segurança Social volta a alertar para mensagens e páginas fraudulentas
-    **Description:** The Social Security agency is once again warning the public about fraudulent messages and websites.
-    **Reason Why Significant:** Directly relevant to your interest in IT Security, highlighting ongoing threats and the need for cybersecurity awareness.
-    **URL:** https://pplware.sapo.pt/internet/seguranca-social-volta-a-alertar-para-mensagens-e-paginas-fraudulentas/
+6.  **Original Number:** 75
+    **Title:** Phil Spencer will retire after 38 years at Microsoft; Asha Sharma, the president of product in Microsoft's Core AI business, will become the CEO of gaming (Jordan Novet/CNBC)
+    **Description:** Phil Spencer is retiring after a long career at Microsoft, and Asha Sharma, President of Product in Microsoft's Core AI business, will succeed him as CEO of Gaming.
+    **Reason why it is significant:** This represents a major leadership transition within Microsoft's gaming division (Xbox), notably bringing in a leader from the "Core AI business." This move signals a significant integration of AI into the future of gaming technology and strategy, highly relevant to your interests in AI and general technology.
+    **URL:** http://www.techmeme.com/260220/p17#a260220p17
 
-8.  **Original Number:** 65
-    **Title:** Como a energia geotérmica pode libertar a UE dos combustíveis fósseis
-    **Description:** This article explores how geothermal energy could help the European Union become independent from fossil fuels.
-    **Reason Why Significant:** This highlights an important technological advancement in clean energy, aligning with your interest in technology and its potential for societal impact.
-    **URL:** https://pplware.sapo.pt/planeta/como-a-energia-geotermica-pode-libertar-a-ue-dos-combustiveis-fosseis/
-
-9.  **Original Number:** 66
-    **Title:** Huawei Mate X7: o smartphone dobrável que redefine a fotografia e a resistência
-    **Description:** A review of the Huawei Mate X7, a foldable smartphone claimed to redefine photography and durability.
-    **Reason Why Significant:** This focuses on an innovative gadget (foldable smartphone) with claims of significant advancements in photography and resistance, aligning with your interest in innovative gadgets.
-    **URL:** https://pplware.sapo.pt/gadgets/huawei-mate-x7-o-smartphone-dobravel-que-redefine-a-fotografia-e-a-resistencia/
-
-10. **Original Number:** 67
-    **Title:** Reentrada de foguetão da SpaceX deixou um rasto de poluição nunca detetado
-    **Description:** The re-entry of a SpaceX rocket has reportedly left an unprecedented pollution trail.
-    **Reason Why Significant:** This touches on space technology and its environmental impact, which is an interesting collision of technology and society, aligning with your general interest in technology.
-    **URL:** https://pplware.sapo.pt/ciencia/reentrada-de-foguetao-da-spacex-deixou-um-rasto-de-poluicao-nunca-detetado/
-
-11. **Original Number:** 68
-    **Title:** Sam Altman acusa empresas de “AI washing”
-    **Description:** Sam Altman, CEO of OpenAI, has accused companies of "AI washing," misleadingly labeling products as AI to appear innovative.
-    **Reason Why Significant:** Directly relevant to your interest in Artificial Intelligence and new developments with ChatGPT/OpenAI, and how AI collides with society (in this case, through misrepresentation).
-    **URL:** https://pplware.sapo.pt/inteligencia-artificial/sam-altman-acusa-empresas-de-ai-washing/
-
-12. **Original Number:** 70
-    **Title:** Bloqueio do Telegram na Rússia está a ter impacto na sua eficácia militar
-    **Description:** The blocking of Telegram in Russia is reportedly affecting its military effectiveness.
-    **Reason Why Significant:** This highlights the intersection of technology (messaging platforms), IT Security (blocking), and geopolitical events, relevant to your interest in IT security and how technology impacts society.
-    **URL:** https://pplware.sapo.pt/redes_sociais/bloqueio-do-telegram-na-russia-esta-a-ter-impacto-na-sua-eficacia-militar/
-
-13. **Original Number:** 71
-    **Title:** Anthropic launches Claude Code Security, which "scans codebases for security vulnerabilities and suggests targeted software patches"; cybersecurity stocks fall
-    **Description:** Anthropic has launched "Claude Code Security," an AI tool designed to scan code for vulnerabilities and suggest patches, impacting cybersecurity stock performance.
-    **Reason Why Significant:** This is highly relevant, combining your interests in AI (specifically Claude), computer programming, IT Security, and investment markets (cybersecurity stocks).
+7.  **Original Number:** 76
+    **Title:** Anthropic launches Claude Code Security, which "scans codebases for security vulnerabilities and suggests targeted software patches"; cybersecurity stocks fall (Ryan Vlastelica/Bloomberg)
+    **Description:** Anthropic has launched "Claude Code Security," an AI tool designed to scan codebases for vulnerabilities and suggest security patches, leading to a fall in cybersecurity stock prices.
+    **Reason why it is significant:** This is a direct development concerning Claude, AI, and IT security, demonstrating how advanced AI is being applied to critical programming and cybersecurity tasks. The impact on cybersecurity stocks also makes it relevant to investment markets.
     **URL:** http://www.techmeme.com/260220/p16#a260220p16
 
-14. **Original Number:** 72
-    **Title:** Code Metal, which uses AI to let engineers translate legacy code into modern languages, raised a $125M Series B led by Salesforce Ventures at a $1.25B valuation
-    **Description:** Code Metal, a company leveraging AI to translate legacy code, has secured $125 million in Series B funding, valuing it at $1.25 billion.
-    **Reason Why Significant:** Directly aligns with your interests in AI, computer programming (especially dealing with legacy code), and investment markets (significant funding round).
+8.  **Original Number:** 77
+    **Title:** Code Metal, which uses AI to let engineers translate legacy code into modern languages, raised a $125M Series B led by Salesforce Ventures at a $1.25B valuation (Lauren Goode/Wired)
+    **Description:** Code Metal, a company leveraging AI to help engineers translate legacy code into modern languages, has successfully raised $125 million in a Series B funding round, valuing the company at $1.25 billion.
+    **Reason why it is significant:** This highlights a significant application of AI in computer programming and software development, addressing a common challenge for engineers. The substantial investment round also makes it relevant to investment markets.
     **URL:** http://www.techmeme.com/260220/p15#a260220p15
 
-15. **Original Number:** 73
-    **Title:** A US judge rejects Tesla's bid to overturn a $243M jury verdict over a fatal 2019 Autopilot crash, a blow for Tesla as it faces a growing wave of lawsuits
-    **Description:** A US judge has upheld a $243 million jury verdict against Tesla concerning a fatal 2019 Autopilot crash, adding to ongoing legal challenges for the company.
-    **Reason Why Significant:** This is a crucial instance of AI (Autopilot technology) colliding with society, raising questions about safety, ethics, and accountability in autonomous systems, which aligns with your interests.
+9.  **Original Number:** 78
+    **Title:** A US judge rejects Tesla's bid to overturn a $243M jury verdict over a fatal 2019 Autopilot crash, a blow for Tesla as it faces a growing wave of lawsuits (Fred Lambert/Electrek)
+    **Description:** A US judge has rejected Tesla's attempt to overturn a $243 million jury verdict related to a fatal 2019 Autopilot crash, impacting the company amid increasing lawsuits.
+    **Reason why it is significant:** This is significant for the field of robotics and autonomous driving (an application of AI), highlighting the legal and societal implications of AI system failures and the responsibility of tech companies. It's a key example of AI colliding with society in a high-stakes manner.
     **URL:** http://www.techmeme.com/260220/p14#a260220p14
 
-16. **Original Number:** 74
-    **Title:** Sources: Google may invest $100M in Fluidstack at a $7.5B valuation and has backstopped crypto miners that are building datacenters, seeking to expand TPU use
-    **Description:** Google is reportedly considering a $100 million investment in Fluidstack, valued at $7.5 billion, and has supported crypto miners constructing data centers to boost TPU (Tensor Processing Unit) utilization.
-    **Reason Why Significant:** Highly relevant, covering investment markets, AI (TPUs), cryptocurrency (miners), and general technology infrastructure (data centers).
+10. **Original Number:** 79
+    **Title:** Sources: Google may invest $100M in Fluidstack at a $7.5B valuation and has backstopped crypto miners that are building datacenters, seeking to expand TPU use (Wall Street Journal)
+    **Description:** Google is reportedly considering a $100 million investment in Fluidstack at a $7.5 billion valuation, and has supported cryptocurrency miners constructing data centers to expand the use of its Tensor Processing Units (TPUs).
+    **Reason why it is significant:** This is highly relevant as it combines your interests in Google, investment markets, AI (TPUs), and cryptocurrency (miners building data centers). It shows how major tech companies are strategically investing in infrastructure to support AI development and potentially influencing the crypto mining space.
     **URL:** http://www.techmeme.com/260220/p13#a260220p13
 
-17. **Original Number:** 75
-    **Title:** Tech stocks rise slightly from their morning lows after the Supreme Court ruled that President Trump lacked the authority to impose sweeping global tariffs
-    **Description:** Tech stocks saw a slight rebound after the Supreme Court's ruling against President Trump's authority to implement broad global tariffs.
-    **Reason Why Significant:** Directly impacts your interest in investment markets, specifically how major political and legal decisions influence the technology sector.
+11. **Original Number:** 80
+    **Title:** Tech stocks rise slightly from their morning lows after the Supreme Court ruled that President Trump lacked the authority to impose sweeping global tariffs (Adam Levine/Barron's Online)
+    **Description:** Tech stocks saw a slight recovery from earlier lows following a Supreme Court ruling that found President Trump lacked the authority to impose broad global tariffs.
+    **Reason why it is significant:** This directly impacts "investment markets" and specifically "technology" stocks, showing how legal and political decisions can have immediate and significant financial consequences for the tech sector.
     **URL:** http://www.techmeme.com/260220/p12#a260220p12
 
-18. **Original Number:** 76
-    **Title:** Peak XV, which split from Sequoia in 2023, raised $1.3B across new India- and Asia-focused funds, bringing its total assets under management to over $10B
-    **Description:** Peak XV, a venture capital firm that emerged from Sequoia in 2023, has raised $1.3 billion for new funds targeting India and Asia, increasing its total assets under management to over $10 billion.
-    **Reason Why Significant:** Relevant to your interest in investment markets, particularly venture capital activity and significant fundraises in the tech and startup ecosystem.
+12. **Original Number:** 81
+    **Title:** Peak XV, which split from Sequoia in 2023, raised $1.3B across new India- and Asia-focused funds, bringing its total assets under management to over $10B (Jagmeet Singh/TechCrunch)
+    **Description:** Peak XV, a venture capital firm that spun off from Sequoia in 2023, has raised $1.3 billion across new funds focused on India and Asia, pushing its total assets under management beyond $10 billion.
+    **Reason why it is significant:** This is a major development in the "investment markets" sector, specifically venture capital, indicating significant capital flow into technology and innovation in Asian markets. It's important for tracking investment trends that fuel tech development.
     **URL:** http://www.techmeme.com/260220/p11#a260220p11
 
-19. **Original Number:** 77
-    **Title:** Claude's C Compiler shows AI elevates the role of human judgment and vision; it's a milestone, but closely mirrors LLVM/GCC, and hard codes things to pass tests
-    **Description:** An analysis of Claude's C Compiler, highlighting its AI capabilities and how it emphasizes human judgment, while also noting its similarities to existing compilers and test-driven development approach.
-    **Reason Why Significant:** This is directly relevant to your interests in AI (specifically Claude) and computer programming, discussing a new AI-driven compiler and its implications for human-AI collaboration in development.
+13. **Original Number:** 82
+    **Title:** Claude's C Compiler shows AI elevates the role of human judgment and vision; it's a milestone, but closely mirrors LLVM/GCC, and hard codes things to pass tests (Chris Lattner/Modular Blog)
+    **Description:** Claude's C Compiler is highlighted as a milestone in AI, showcasing how AI can enhance human judgment in programming, despite closely resembling existing compilers and having specific test-passing hard-codes.
+    **Reason why it is significant:** This is a specific development related to Claude and its application in computer programming. It offers an insightful perspective on how AI impacts software development, whether by assisting human programmers or mimicking existing tools, which is highly relevant to your interests.
     **URL:** http://www.techmeme.com/260220/p10#a260220p10
 
-20. **Original Number:** 78
-    **Title:** Sources: OpenAI has 200+ people working on a family of AI devices, including a smart speaker priced from $200 to $300, possibly smart glasses and a smart lamp
-    **Description:** OpenAI is reportedly developing a range of AI-powered hardware devices, including a smart speaker, smart glasses, and a smart lamp, with a team of over 200 people.
-    **Reason Why Significant:** This is highly significant for your interests in AI (OpenAI developments), innovative gadgets, and potential advancements in Virtual Reality/Augmented Reality (smart glasses).
+14. **Original Number:** 83
+    **Title:** Sources: OpenAI has 200+ people working on AI devices, including a smart speaker with a camera costing $200 to $300, possibly smart glasses and a smart lamp (The Information)
+    **Description:** OpenAI is reportedly developing various AI-powered hardware devices, including a smart speaker with a camera, potentially smart glasses, and a smart lamp, with over 200 staff dedicated to these projects.
+    **Reason why it is significant:** This is incredibly significant for your interests in OpenAI, AI, and innovative gadgets, as well as Virtual Reality and Augmented Reality (smart glasses). It indicates OpenAI's expansion into hardware, bringing AI directly into everyday devices and potentially shaping the future of interactive technology.
     **URL:** http://www.techmeme.com/260220/p9#a260220p9
 
-21. **Original Number:** 79
-    **Title:** Avantos, which makes an AI-native client management system for financial institutions, raised a $25M Series A led by Bessemer, taking its total funding to $35M
-    **Description:** Avantos, a company providing an AI-native client management system for financial institutions, has secured $25 million in Series A funding, bringing its total funding to $35 million.
-    **Reason Why Significant:** Combines your interest in AI (AI-native systems) with investment markets (funding rounds) and technology applications in finance.
+15. **Original Number:** 84
+    **Title:** Avantos, which makes an AI-native client management system for financial institutions, raised a $25M Series A led by Bessemer, taking its total funding to $35M (Minh Le/Tech in Asia)
+    **Description:** Avantos, a company that develops an AI-native client management system for financial institutions, has secured $25 million in a Series A funding round, bringing its total funding to $35 million.
+    **Reason why it is significant:** This is relevant to your interest in AI and investment markets. It highlights investment in AI-driven solutions for the financial sector, showcasing how AI is being integrated into core business operations and attracting significant venture capital.
     **URL:** http://www.techmeme.com/260220/p8#a260220p8
 
-22. **Original Number:** 80
-    **Title:** OpenAI says users aged 18 to 24 account for nearly 50% and under-30s represent 80% of ChatGPT messages in India; 35% of chats are related to professional tasks
-    **Description:** OpenAI has released statistics showing that young users (18-24) constitute almost 50% of ChatGPT messages in India, with 80% of under-30s using the platform, and 35% of conversations being work-related.
-    **Reason Why Significant:** This provides insight into the societal adoption and impact of ChatGPT (AI), especially among younger demographics and for professional use, aligning with your interest in AI colliding with society.
+16. **Original Number:** 85
+    **Title:** OpenAI says users aged 18 to 24 account for nearly 50% and under-30s represent 80% of ChatGPT messages in India; 35% of chats are related to professional tasks (Ivan Mehta/TechCrunch)
+    **Description:** OpenAI data for India indicates that users aged 18-24 make up almost 50% of ChatGPT messages, with those under 30 accounting for 80%, and 35% of these interactions are for professional tasks.
+    **Reason why it is significant:** This provides valuable demographic and usage data for ChatGPT in a major global market (India). It's significant for understanding how AI is colliding with society, particularly among younger generations and in professional contexts, directly relevant to your interest in ChatGPT and AI's societal impact.
     **URL:** http://www.techmeme.com/260220/p7#a260220p7
 
-23. **Original Number:** 81
-    **Title:** Pepper, which offers a digital storefront for independent food distributors, raised a $50M Series C led by Lead Edge Capital, taking its total funding to $100M
-    **Description:** Pepper, a platform providing digital storefronts for independent food distributors, has raised $50 million in Series C funding, bringing its total funding to $100 million.
-    **Reason Why Significant:** While not a core AI breakthrough, this is a significant investment in a technology company (digital storefront platform), relevant to your interest in investment markets and general technology.
-    **URL:** http://www.techmeme.com/260220/p6#a260220p16
-
-24. **Original Number:** 82
-    **Title:** Scott Myers, the head of Snap's AR glasses subsidiary Specs, leaves after six years; sources say Myers left after a "blow-up" with Evan Spiegel over strategy
-    **Description:** Scott Myers, who led Snap's AR glasses division "Specs," has departed after six years, reportedly due to strategic disagreements with CEO Evan Spiegel.
-    **Reason Why Significant:** Relevant to your interest in Augmented Reality (AR) and technology, as executive changes and strategic disputes can indicate shifts or challenges in the development of AR products.
-    **URL:** http://www.techmeme.com/260220/p5#a260220p5
-
-25. **Original Number:** 83
-    **Title:** Sources: SoftBank plans to form a consortium to build a $33B power plant in Ohio, set to produce 9.2 GW for AI data centers, as part of the US-Japan trade deal
-    **Description:** SoftBank is reportedly leading a consortium to construct a $33 billion power plant in Ohio, designed to generate 9.2 GW of electricity specifically for AI data centers, as part of a US-Japan trade agreement.
-    **Reason Why Significant:** This is highly relevant, combining your interests in AI (powering data centers), technology infrastructure, and significant investment markets (a $33 billion project).
-    **URL:** http://www.techmeme.com/260220/p4#a260220p4
-
-26. **Original Number:** 84
-    **Title:** General Catalyst plans to invest $5B in India over five years, an increase from the $500M to $1B it previously announced, after merging with a local VC in 2024
-    **Description:** General Catalyst plans to significantly increase its investment in India to $5 billion over five years, following its merger with a local VC firm in 2024.
-    **Reason Why Significant:** Directly relevant to your interest in investment markets, highlighting major venture capital activity in a key emerging market.
-    **URL:** http://www.techmeme.com/260220/p3#a260220p3
-
-27. **Original Number:** 85
-    **Title:** Google rejected 1.75M policy-violating Android apps and blocked 80K+ developer accounts from Google Play in 2025, down from 2.36M apps and 158K accounts in 2024
-    **Description:** Google reported rejecting 1.75 million policy-violating Android apps and blocking over 80,000 developer accounts from Google Play in 2025.
-    **Reason Why Significant:** This provides insight into the ongoing efforts in IT Security and platform governance within the technology ecosystem, relevant to your interest in IT security.
-    **URL:** http://www.techmeme.com/260220/p2#a260220p2
-
-28. **Original Number:** 86
-    **Title:** Supertastic RoboPi-4leg-Dog
-    **Description:** A project description for a four-legged robot dog named "Supertastic RoboPi-4leg-Dog."
-    **Reason Why Significant:** Directly aligns with your interests in robotics and computer programming, as it describes a specific robotics project.
-    **URL:** https://www.hackster.io/kalatoja0/supertastic-robopi-4leg-dog-c74fb7
-
-29. **Original Number:** 88
-    **Title:** Zurich’s Rapidata raises €7.2M to build a real-time human feedback network for AI
-    **Description:** Zurich-based Rapidata has raised €7.2 million to develop a real-time human feedback network specifically for Artificial Intelligence systems.
-    **Reason Why Significant:** This is directly relevant to your interest in AI, particularly the development of AI systems that learn from human interaction, and the investment backing such ventures.
+17. **Original Number:** 89
+    **Title:** Zurich’s Rapidata raises €7.2M to build a real-time human feedback network for AI (thenextweb.com)
+    **Description:** Rapidata, a Zurich-based company, has raised €7.2 million to develop a real-time human feedback network specifically for AI systems.
+    **Reason why it is significant:** This is highly relevant to your interest in AI and investment markets. Human feedback is crucial for improving and refining AI models, making this an important development in AI training methodology and a significant investment in the AI ecosystem.
     **URL:** https://thenextweb.com/news/zurichs-rapidata-raises-e7-2m-to-build-a-real-time-human-feedback-network-for-ai
 
-30. **Original Number:** 89
-    **Title:** Gartner $110M sale of Digital Markets division in latest SEC filing
+18. **Original Number:** 3
+    **Title:** Trump says he is considering limited military strike on Iran
+    **Description:** Former President Trump has stated he is considering a limited military strike on Iran.
+    **Reason why it is significant:** While not directly technology, geopolitical events of this magnitude can significantly impact global "investment markets" due to potential oil price volatility, supply chain disruptions, and shifts in investor confidence. This is crucial information for anyone monitoring market trends.
+    **URL:** https://www.bbc.com/news/articles/cdxzk4gvzp0o?at_medium=RSS&at_campaign=rss
+
+19. **Original Number:** 4
+    **Title:** Humans to travel further into space than ever before as Nasa confirms March Moon mission
+    **Description:** NASA has confirmed a March Moon mission, which will see humans travel further into space than ever before.
+    **Reason why it is significant:** This represents a major "technology" and scientific "breakthrough" in space exploration, pushing the boundaries of human achievement and engineering. It aligns with a general interest in advanced technology and significant scientific milestones.
+    **URL:** https://www.bbc.com/news/articles/c86y1g6wde3o?at_medium=RSS&at_campaign=rss
+
+20. **Original Number:** 10
+    **Title:** UK agrees drone defence plan with four EU allies
+    **Description:** The UK has reached an agreement with four European Union allies on a joint drone defense plan.
+    **Reason why it is significant:** This is directly relevant to your interest in "drones" and "IT security." It signifies a collaborative effort in developing advanced defense technology against drone threats, showcasing international cooperation in modern technological warfare.
+    **URL:** https://www.bbc.com/news/articles/c875jj3y475o?at_medium=RSS&at_campaign=rss
+
+21. **Original Number:** 17
+    **Title:** Tariffs ruling is major blow to Trump's second-term agenda
+    **Description:** A ruling on tariffs has been identified as a significant setback for former President Trump's prospective second-term agenda.
+    **Reason why it is significant:** This is significant for "investment markets" as changes in trade policy and political agendas can have profound impacts on global economies and specific market sectors, including technology. It complements item 80 by providing the broader political context.
+    **URL:** https://www.bbc.com/news/articles/cx2jqgdn719o?at_medium=RSS&at_campaign=rss
+
+22. **Original Number:** 60
+    **Title:** Governo quer geradores, telefones Siresp e Starlink em todas as freguesias
+    **Description:** The government aims to equip all parishes with generators, Siresp phones, and Starlink internet.
+    **Reason why it is significant:** This is relevant to your general interest in "technology" and "drones" (Starlink provides satellite internet connectivity often used in remote areas and with drones for communication). It showcases a government initiative to enhance connectivity and resilience through modern tech, particularly in disaster preparedness.
+    **URL:** https://pplware.sapo.pt/informacao/governo-quer-geradores-telefones-siresp-e-starlink-em-todas-as-freguesias/
+
+23. **Original Number:** 69
+    **Title:** Como a energia geotérmica pode libertar a UE dos combustíveis fósseis
+    **Description:** An article discussing how geothermal energy could enable the EU to become independent from fossil fuels.
+    **Reason why it is significant:** This is relevant to your broad interest in "technology" as it discusses an important aspect of sustainable energy. Geothermal energy represents a significant technological avenue for environmental progress and energy independence.
+    **URL:** https://pplware.sapo.pt/planeta/como-a-energia-geotermica-pode-libertar-a-ue-dos-combustiveis-fosseis/
+
+24. **Original Number:** 71
+    **Title:** Reentrada de foguetão da SpaceX deixou um rasto de poluição nunca detetado
+    **Description:** A SpaceX rocket re-entry has reportedly left a previously undetected trace of pollution.
+    **Reason why it is significant:** This is significant for "technology" and space exploration (SpaceX), raising important questions about the environmental impact of advanced rocketry and the long-term sustainability of space travel.
+    **URL:** https://pplware.sapo.pt/ciencia/reentrada-de-foguetao-da-spacex-deixou-um-rasto-de-poluicao-nunca-detetado/
+
+25. **Original Number:** 90
+    **Title:** Gartner $110M sale of Digital Markets division in latest SEC filing (thenextweb.com)
     **Description:** Gartner has reported the sale of its Digital Markets division for $110 million in a recent SEC filing.
-    **Reason Why Significant:** Relevant to your interest in investment markets and the broader technology industry, as it indicates significant corporate transactions within the tech analytics space.
+    **Reason why it is significant:** This is relevant to "investment markets" as it represents a significant M&A activity within the tech sector, indicating strategic shifts and valuations of digital market assets.
     **URL:** https://thenextweb.com/news/gartner-110m-sale-of-digital-markets-division-in-latest-sec-filing
+
+26. **Original Number:** 86
+    **Title:** Pepper, which offers a digital storefront for independent food distributors, raised a $50M Series C led by Lead Edge Capital, taking its total funding to $100M (Chris Metinko/Axios)
+    **Description:** Pepper, a company providing digital storefronts for independent food distributors, has secured $50 million in a Series C funding round, bringing its total funding to $100 million.
+    **Reason why it is significant:** This is significant for "investment markets" and general "technology," demonstrating substantial venture capital interest in B2B digital solutions and the ongoing digitization of various industries.
+    **URL:** http://www.techmeme.com/260220/p6#a260220p6
+
+27. **Original Number:** 70
+    **Title:** Huawei Mate X7: o smartphone dobrável que redefine a fotografia e a resistência
+    **Description:** Introducing the Huawei Mate X7, a foldable smartphone claimed to redefine photography and resistance.
+    **Reason why it is significant:** As you are interested in innovative "gadgets," this headline suggests a potentially groundbreaking foldable smartphone from Huawei. If it truly "redefines photography and resistance," it would be an innovative leap in smartphone technology, worth investigating further.
+    **URL:** https://pplware.sapo.pt/gadgets/huawei-mate-x7-o-smartphone-dobravel-que-redefine-a-fotografia-e-a-resistencia/
+
+28. **Original Number:** 87
+    **Title:** Supertastic RoboPi-4leg-Dog
+    **Description:** A project showcasing a "Supertastic RoboPi-4leg-Dog," likely a DIY robotics project.
+    **Reason why it is significant:** This aligns with your interest in "robotics" and "computer programming," and particularly "cool stuff that everyday people can do with AI." It represents accessible robotics and potentially leverages AI/programming for hobbyists and enthusiasts.
+    **URL:** https://www.hackster.io/kalatoja0/supertastic-robopi-4leg-dog-c74fb7
+
+29. **Original Number:** 74
+    **Title:** Xbox President Sarah Bond, long thought to be Phil Spencer's heir, is leaving; Xbox Game Studios head Matt Booty is promoted to Chief Content Officer (Ryan McCaffrey/IGN)
+    **Description:** Sarah Bond, previously seen as Phil Spencer's successor as Xbox President, is departing, while Matt Booty, head of Xbox Game Studios, is promoted to Chief Content Officer.
+    **Reason why it is significant:** This is a notable leadership change within a major "technology" company (Microsoft's Xbox division). Such shifts can influence future product strategies, technological investments, and market direction in the gaming and broader tech industries, making it relevant for "investment markets" as well.
+    **URL:** http://www.techmeme.com/260220/p18#a260220p18
+
+30. **Original Number:** 62
+    **Title:** Como é que a Uber sabe onde está mesmo com a localização restrita?
+    **Description:** An explanation of how Uber can determine a user's location even when location services are restricted.
+    **Reason why it is significant:** This is relevant to your interests in "technology" and "IT Security" (specifically privacy). It addresses a common user concern and explores the methods (beyond simple GPS) that apps use for location tracking, touching on privacy implications and how AI might interpret contextual data.
+    **URL:** https://pplware.sapo.pt/internet/como-e-que-a-uber-sabe-onde-esta-mesmo-com-a-localizacao-restrita/

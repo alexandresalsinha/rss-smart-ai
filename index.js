@@ -79,9 +79,22 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
     // Parse articles from the text - split by numbered items
     const articleMatches = analysisText.match(/\d+\.\s+.+?(?=\n\d+\.|$)/gs) || [];
     const articlesHTML = articleMatches.map((article, index) => {
-        // Extract title (usually after the number, before parentheses or dash)
-        const titleMatch = article.match(/\d+\.\s+(.+?)(?:\n|$)/);
-        const title = titleMatch ? titleMatch[1].trim() : '';
+        let title = '';
+        let content = article;
+        
+        // For Gemini format: extract title from **Title:** field
+        const geminiTitleMatch = article.match(/\*\*Title:\*\*\s+(.+?)(?:\n|$)/);
+        if (geminiTitleMatch) {
+            title = geminiTitleMatch[1].trim();
+            // Remove the **Original Number:** line and clean up content
+            content = article.replace(/\*\*Original Number:\*\*\s+\d+\s*\n/, '');
+        } else {
+            // For OpenAI format: extract title from the first line
+            const titleMatch = article.match(/\d+\.\s+(.+?)(?:\n|$)/);
+            title = titleMatch ? titleMatch[1].trim() : '';
+            // Remove markdown bold formatting if present
+            title = title.replace(/\*\*/g, '');
+        }
         
         // Extract URL if present
         const urlMatch = article.match(/(https?:\/\/[^\s\n]+)/);
@@ -92,7 +105,7 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
         <div class="article">
             <div class="article-number">${index + 1}</div>
             <h3 class="article-title">${title}</h3>
-            <div class="article-content">${article.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\d+\.\s+/, '').trim()}</div>
+            <div class="article-content">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\d+\.\s+/, '').trim()}</div>
             ${url ? `<a href="${url}" target="_blank" class="article-link">Read More →</a>` : ''}
         </div>
         `;
