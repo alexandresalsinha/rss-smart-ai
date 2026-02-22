@@ -274,6 +274,21 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
     console.log(`Analysis saved to ${htmlFile}`);
 }
 
+function exportToSpeechText(analysisText, textFile) {
+    // Remove URLs (https://... and http://...)
+    let cleanText = analysisText.replace(/https?:\/\/[^\s\n]+/g, '');
+    
+    // Remove all asterisks (used for markdown formatting)
+    cleanText = cleanText.replace(/\*/g, '');
+    
+    // Clean up excessive whitespace and newlines
+    cleanText = cleanText.replace(/\n\s*\n\s*\n/g, '\n\n'); // Replace 3+ newlines with 2
+    cleanText = cleanText.trim();
+    
+    fs.writeFileSync(textFile, cleanText);
+    console.log(`Speech-ready text exported to ${textFile}`);
+}
+
 const analysisPrompt = `
     Here is a list of news headlines from today:
     {newsList}
@@ -331,6 +346,10 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
         const htmlFile = `top_news_analysis_${dateStamp}.html`;
         exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o');
 
+        // Export to speech-ready text
+        const speechTextFile = `top_news_analysis_speech_${dateStamp}.txt`;
+        exportToSpeechText(analysisResult, speechTextFile);
+
     } catch (err) {
         console.error('Error during OpenAI analysis:', err.message);
     }
@@ -364,6 +383,10 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         // Export to HTML
         const htmlFile = `top_news_analysis_gemini_${dateStamp}.html`;
         exportToHTML(analysisResult, htmlFile, 'Google Gemini');
+
+        // Export to speech-ready text
+        const speechTextFile = `top_news_analysis_gemini_speech_${dateStamp}.txt`;
+        exportToSpeechText(analysisResult, speechTextFile);
 
     } catch (err) {
 
