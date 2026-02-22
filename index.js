@@ -281,6 +281,11 @@ function exportToSpeechText(analysisText, textFile) {
     // Remove all asterisks (used for markdown formatting)
     cleanText = cleanText.replace(/\*/g, '');
     
+    // Remove specific label strings
+    cleanText = cleanText.replace(/URL:\s*/g, '');
+    cleanText = cleanText.replace(/Description:\s*/g, '');
+    cleanText = cleanText.replace(/Title:\s*/g, '');
+    
     // Clean up excessive whitespace and newlines
     cleanText = cleanText.replace(/\n\s*\n\s*\n/g, '\n\n'); // Replace 3+ newlines with 2
     cleanText = cleanText.trim();
