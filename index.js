@@ -4,6 +4,7 @@ const ExcelJS = require('exceljs');
 require('dotenv').config();
 const OpenAI = require('openai');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const textToSpeech = require('@google-cloud/text-to-speech');
 
 const parser = new Parser();
 const openai = new OpenAI({
@@ -292,6 +293,40 @@ function exportToSpeechText(analysisText, textFile) {
     
     fs.writeFileSync(textFile, cleanText);
     console.log(`Speech-ready text exported to ${textFile}`);
+    
+    return cleanText;
+}
+
+async function generateAudioFromText(textFile, audioFile) {
+    if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+        console.warn('Skipping audio generation: GOOGLE_APPLICATION_CREDENTIALS environment variable not set');
+        console.log('Set GOOGLE_APPLICATION_CREDENTIALS to your Google Cloud service account JSON file path');
+        return;
+    }
+
+    try {
+        console.log('Generating audio from text using Google Text-to-Speech...');
+        
+        const text = fs.readFileSync(textFile, 'utf8');
+        const client = new textToSpeech.TextToSpeechClient();
+        
+        const request = {
+            input: { text: text },
+            voice: {
+                languageCode: 'en-US',
+                name: 'en-US-Neural2-C',
+                ssmlGender: 'MALE'
+            },
+            audioConfig: { audioEncoding: 'MP3' },
+        };
+        
+        const [response] = await client.synthesizeSpeech(request);
+        await fs.promises.writeFile(audioFile, response.audioContent, 'binary');
+        
+        console.log(`Audio saved to ${audioFile}`);
+    } catch (err) {
+        console.error('Error generating audio:', err.message);
+    }
 }
 
 const analysisPrompt = `
@@ -355,6 +390,10 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
         const speechTextFile = `top_news_analysis_speech_${dateStamp}.txt`;
         exportToSpeechText(analysisResult, speechTextFile);
 
+        // Generate audio from speech text
+        const audioFile = `top_news_analysis_${dateStamp}.mp3`;
+        await generateAudioFromText(speechTextFile, audioFile);
+
     } catch (err) {
         console.error('Error during OpenAI analysis:', err.message);
     }
@@ -392,6 +431,10 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         // Export to speech-ready text
         const speechTextFile = `top_news_analysis_gemini_speech_${dateStamp}.txt`;
         exportToSpeechText(analysisResult, speechTextFile);
+
+        // Generate audio from speech text
+        const audioFile = `top_news_analysis_gemini_${dateStamp}.mp3`;
+        await generateAudioFromText(speechTextFile, audioFile);
 
     } catch (err) {
 
