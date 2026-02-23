@@ -5,6 +5,8 @@ require('dotenv').config();
 const OpenAI = require('openai');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const textToSpeech = require('@google-cloud/text-to-speech');
+const { Storage } = require('@google-cloud/storage');
+const path = require('path');
 
 const parser = new Parser();
 const openai = new OpenAI({
@@ -297,6 +299,38 @@ function exportToSpeechText(analysisText, textFile) {
     return cleanText;
 }
 
+function resolveOutputGcsUri(audioFile) {
+    const explicitUri = process.env.GOOGLE_TTS_OUTPUT_GCS_URI;
+    if (explicitUri) {
+        return explicitUri;
+    }
+
+    const prefix = process.env.GOOGLE_TTS_OUTPUT_GCS_PREFIX;
+    if (!prefix) {
+        return null;
+    }
+
+    const normalizedPrefix = prefix.endsWith('/') ? prefix : `${prefix}/`;
+    return `${normalizedPrefix}${path.basename(audioFile)}`;
+}
+
+function parseGcsUri(gcsUri) {
+    if (!gcsUri.startsWith('gs://')) {
+        throw new Error(`Invalid GCS URI: ${gcsUri}`);
+    }
+
+    const withoutScheme = gcsUri.slice('gs://'.length);
+    const firstSlash = withoutScheme.indexOf('/');
+    if (firstSlash === -1) {
+        throw new Error(`GCS URI must include an object path: ${gcsUri}`);
+    }
+
+    return {
+        bucket: withoutScheme.slice(0, firstSlash),
+        object: withoutScheme.slice(firstSlash + 1)
+    };
+}
+
 async function generateAudioFromText(textFile, audioFile) {
     if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
         console.warn('Skipping audio generation: GOOGLE_APPLICATION_CREDENTIALS environment variable not set');
@@ -304,26 +338,49 @@ async function generateAudioFromText(textFile, audioFile) {
         return;
     }
 
+    const projectId = process.env.GOOGLE_CLOUD_PROJECT;
+    const location = process.env.GOOGLE_TTS_LOCATION || 'us';
+    const outputGcsUri = resolveOutputGcsUri(audioFile);
+
+    if (!projectId) {
+        console.warn('Skipping audio generation: GOOGLE_CLOUD_PROJECT environment variable not set');
+        return;
+    }
+
+    if (!outputGcsUri) {
+        console.warn('Skipping audio generation: set GOOGLE_TTS_OUTPUT_GCS_URI or GOOGLE_TTS_OUTPUT_GCS_PREFIX');
+        return;
+    }
+
     try {
-        console.log('Generating audio from text using Google Text-to-Speech...');
-        
+        console.log('Generating long-form audio using Google Text-to-Speech...');
         const text = fs.readFileSync(textFile, 'utf8');
-        const client = new textToSpeech.TextToSpeechClient();
-        
+        const client = new textToSpeech.TextToSpeechLongAudioSynthesizeClient();
+
         const request = {
+            parent: `projects/${projectId}/locations/${location}`,
             input: { text: text },
             voice: {
                 languageCode: 'en-US',
                 name: 'en-US-Neural2-C',
                 ssmlGender: 'MALE'
             },
-            audioConfig: { audioEncoding: 'MP3' },
+            audioConfig: { audioEncoding: 'LINEAR16' },
+            outputGcsUri: outputGcsUri
         };
-        
-        const [response] = await client.synthesizeSpeech(request);
-        await fs.promises.writeFile(audioFile, response.audioContent, 'binary');
-        
-        console.log(`Audio saved to ${audioFile}`);
+
+        const [operation] = await client.synthesizeLongAudio(request);
+        await operation.promise();
+        console.log(`Long-form audio saved to ${outputGcsUri}`);
+
+        try {
+            const storage = new Storage();
+            const { bucket, object } = parseGcsUri(outputGcsUri);
+            await storage.bucket(bucket).file(object).download({ destination: audioFile });
+            console.log(`Audio downloaded to ${audioFile}`);
+        } catch (downloadError) {
+            console.warn(`Unable to download audio from GCS: ${downloadError.message}`);
+        }
     } catch (err) {
         console.error('Error generating audio:', err.message);
     }
@@ -391,7 +448,7 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = `top_news_analysis_${dateStamp}.mp3`;
+        const audioFile = `top_news_analysis_${dateStamp}.wav`;
         await generateAudioFromText(speechTextFile, audioFile);
 
     } catch (err) {
@@ -433,7 +490,7 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = `top_news_analysis_gemini_${dateStamp}.mp3`;
+        const audioFile = `top_news_analysis_gemini_${dateStamp}.wav`;
         await generateAudioFromText(speechTextFile, audioFile);
 
     } catch (err) {
@@ -450,9 +507,15 @@ async function analyzeWithGemini(newsItems, dateStamp) {
 }
 
 async function main() {
-    const feeds = await readFeeds('feeds.txt');
-    console.log(`Found ${feeds.length} feeds.`);
+    // const feeds = await readFeeds('feeds.txt');
+    // console.log(`Found ${feeds.length} feeds.`);
 
+    const feeds = [];
+        const speechTextFile = `top_news_analysis_gemini_speech_2026-02-22.txt`;
+
+    const audioFile = `top_news_analysis_gemini_speech_2026-02-22.wav`;
+        await generateAudioFromText(speechTextFile, audioFile);
+        return;
     let allNews = [];
     for (const feed of feeds) {
         console.log(`Fetching ${feed}...`);

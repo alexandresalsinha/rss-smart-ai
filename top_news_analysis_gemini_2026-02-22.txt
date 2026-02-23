@@ -1,51 +1,181 @@
-Here are the most significant news items from your list, tailored to your interests, Alexandre. While you requested the "Top 30", only 8 articles from the provided list fit your specific criteria for relevance and significance.
+Here are the Top 30 most significant news items from your list, curated to your interests:
 
----
+1.  **Original Number:** 72
+    **Title:** Sam Altman says discussions about AI's energy usage are "unfair", as it takes "20 years of life and all of the food you eat during that time" to train a human
+    **Description:** OpenAI CEO Sam Altman argues that the scrutiny around AI's energy consumption is disproportionate when compared to the vast energy requirements to sustain and educate a human life over decades.
+    **Reason why it is significant:** This statement from a leading AI figure addresses a critical, and often debated, aspect of AI's societal impact and resource demands. It offers a unique perspective on the energy cost of intelligence, whether artificial or biological.
+    **URL:** https://www.techmeme.com/260222/p11#a260222p11
 
-1.  **Original Number:** 4
-    **Title:** The Papers: Andrew 'inquiry' calls and hiding from 'Putin's killer drones'
-    **Description:** A summary of newspaper headlines, prominently featuring calls for an inquiry related to Prince Andrew and discussions on strategies for evading "Putin's killer drones."
-    **Reason Why it is Significant:** This article is directly relevant to your interest in "drones," especially concerning their application in military or security contexts, and broadly touches upon "IT Security" in terms of defense strategies.
-    **URL:** https://www.bbc.com/news/articles/cx28ldj544jo?at_medium=RSS&at_campaign=rss
+2.  **Original Number:** 79
+    **Title:** Sam Altman says currently "the idea of putting data centers in space is ridiculous" and that it is "not something that's going to matter at scale this decade"
+    **Description:** OpenAI CEO Sam Altman dismisses futuristic proposals, such as placing data centers in space, stating they are impractical and will not be a significant or scalable solution for AI infrastructure within the current decade.
+    **Reason why it is significant:** This provides a pragmatic, near-term outlook from a key AI leader on ambitious technological concepts related to AI infrastructure. It helps to ground expectations for future tech developments.
+    **URL:** https://www.techmeme.com/260222/p4#a260222p4
 
-2.  **Original Number:** 17
-    **Title:** Sam Altman says there is some "AI washing", where companies blame AI for layoffs that they would otherwise do, alongside "real displacement by AI" of some jobs (AJ Dellinger/Gizmodo)
-    **Description:** Sam Altman of OpenAI discusses the dual nature of AI's impact on employment, highlighting both the genuine displacement of jobs by AI and the phenomenon of "AI washing," where companies falsely attribute layoffs to AI.
-    **Reason Why it is Significant:** This is highly significant to your interests in "artificial intelligence," "AI collides with society in interesting ways," and specific developments with major AI figures like Sam Altman (OpenAI). It addresses crucial societal and economic implications of AI.
-    **URL:** http://www.techmeme.com/260221/p10#a260221p10
+3.  **Original Number:** 78
+    **Title:** The US consulting market is set to grow 7% in 2026, the fastest pace in the post-COVID era, as companies seek advice on profiting from AI
+    **Description:** A new report forecasts a significant 7% growth for the US consulting market in 2026, marking its fastest expansion in years, primarily driven by businesses investing in strategies to leverage artificial intelligence for profit.
+    **Reason why it is significant:** This highlights the profound economic impact of AI, indicating strong investment in AI adoption and strategy across various industries, and directly influencing the investment markets.
+    **URL:** https://www.techmeme.com/260222/p5#a260222p5
 
-3.  **Original Number:** 18
-    **Title:** The forgotten sci-fi show that quietly predicted our world 14 years ago
-    **Description:** An article exploring a science fiction television series that, despite being largely overlooked, made surprisingly accurate predictions about future technologies and societal developments fourteen years prior.
-    **Reason Why it is Significant:** This appeals to your interest in "technology" and how it "collides with society," especially if the predictions relate to AI, robotics, VR/AR, or other advanced tech. It offers a fascinating historical perspective on tech foresight.
-    **URL:** https://www.makeuseof.com/the-forgotten-sci-fi-show-that-quietly-predicted-our-world-14-years-ago/
+4.  **Original Number:** 77
+    **Title:** Anthropic's data shows software engineering accounts for ~50% of its AI agent tool calls; the remaining verticals are greenfields most founders are overlooking
+    **Description:** Data from Anthropic reveals that roughly half of the interactions with its AI agent tools are for software engineering tasks, suggesting that a vast array of other potential applications across different industries remain largely unexplored.
+    **Reason why it is significant:** This offers a deep insight into the current practical applications of AI agents, particularly in computer programming and software development. It also points to significant greenfield opportunities for AI innovation.
+    **URL:** https://www.techmeme.com/260222/p6#a260222p6
 
-4.  **Original Number:** 22
-    **Title:** Robinhood’s new concierge service signals a push toward all-in-one financial platforms. Is consolidating worth it? - KQ2
-    **Description:** Robinhood's introduction of a new concierge service is seen as a move towards comprehensive, all-in-one financial platforms, prompting discussion on the benefits and drawbacks of such consolidation.
-    **Reason Why it is Significant:** This is relevant to your interest in "investment markets" and "technology" as it covers significant trends in fintech (financial technology) and potentially the use of AI/automation in financial services.
-    **URL:** https://news.google.com/rss/articles/CBMiigJBVV95cUxPMG9FYWdjWnVrblphVGpTaXpfX0QwbjdyeDNHNFpuZVFCNjRQbzdhUTJNbTlQcTZEdDVFSHAtN3FzTzBJcndEWm8xclJVTlhCVGpWT21BMDN2SWJ5M2gxUFV6T3JWWDhFNUstR09nYUxUaDBDWUZNaWpqMXQ2NWtySnN3bURadWNFVDJwZGR2V1RNbFJsMVhjT2lldGxLRHljbUI3WWNrU3RXLUk0b1JMWW5ObWgzbEpyenhXMmZaSW1IYmo0S3hsT1VkY2FrNk9lUkNtMkZCTDJOVDZ3b05DY1FzdlZSVDNPM04tdXdJZDM0anF2UjZDc2tOTnVWUXZhNHUwSlJJN3p0dw?oc=5
+5.  **Original Number:** 74
+    **Title:** Tim Cook's increased mentions of Visual Intelligence hint it will be a major part of Apple's new wearables; sources: Apple considers a deep red iPhone 18 Pro
+    **Description:** Apple CEO Tim Cook's growing emphasis on "Visual Intelligence" suggests this technology will be a central component of Apple's upcoming wearable devices, potentially enhancing their augmented and virtual reality capabilities.
+    **Reason why it is significant:** This indicates Apple's strategic direction in integrating AI and AR/VR into its future gadgets, which is highly relevant for interests in virtual reality, augmented reality, and innovative technology.
+    **URL:** https://www.techmeme.com/260222/p9#a260222p9
 
-5.  **Original Number:** 26
-    **Title:** Economic Turmoil Intensifies: SCOTUS Overturns Tariffs as US Labor Market Hits Recession Levels
-    **Description:** The US economy is experiencing significant turmoil, marked by a Supreme Court decision to overturn tariffs and the labor market reaching recessionary levels.
-    **Reason Why it is Significant:** This is highly relevant to your interest in "investment markets," as major economic shifts, significant legal decisions affecting trade (tariffs), and recession indicators profoundly influence investment strategies and market performance.
-    **URL:** https://stockmarketwatch.com/stock-market-news/economic-turmoil-intensifies-scotus-overturns-tariffs-as-us-labor-market-hits-recession-levels/58903/
+6.  **Original Number:** 80
+    **Title:** Amazon details how a Russian-speaking hacker used generative AI as part of a campaign that breached 600+ FortiGate firewalls across 55 countries in five weeks
+    **Description:** Amazon has released comprehensive details explaining how a hacker, believed to be Russian-speaking, utilized generative AI to orchestrate a sophisticated cyberattack, compromising over 600 FortiGate firewalls globally.
+    **Reason why it is significant:** This is a crucial IT security development, illustrating a real-world instance of generative AI being exploited for large-scale malicious cyber activities, underscoring the evolving threats in IT security.
+    **URL:** https://www.techmeme.com/260222/p3#a260222p3
 
-6.  **Original Number:** 27
-    **Title:** Crypto holds steady amid inflation outlook and geopolitics risks, Nexo says
-    **Description:** Nexo reports that the cryptocurrency market is demonstrating stability even when facing global inflation concerns and various geopolitical risks.
-    **Reason Why it is Significant:** This is highly relevant to your interests in "Cryptocurrency" and "investment markets," providing an up-to-date analysis of crypto's resilience against macroeconomic and geopolitical pressures.
-    **URL:** https://www.investing.com/news/cryptocurrency-news/crypto-holds-steady-amid-inflation-outlook-and-geopolitics-risks-nexo-says-4517532
+7.  **Original Number:** 81
+    **Title:** Salt Lake City-based Jump, a provider of AI tools for financial advisors to automate meeting prep and more, raised an $80M Series B led by Insight Partners
+    **Description:** Jump, a company specializing in AI-driven tools designed to automate tasks for financial advisors, such as meeting preparation, has secured a significant $80 million in Series B funding.
+    **Reason why it is significant:** This highlights substantial investment in AI applications within the financial sector, demonstrating the growing trend of leveraging AI for automation and efficiency in specialized professional services.
+    **URL:** http://www.techmeme.com/260222/p2#a260222p2
 
-7.  **Original Number:** 28
-    **Title:** Ripple CEO Garlinghouse: Clarity Act 90% likely to pass by April
-    **Description:** Brad Garlinghouse, CEO of Ripple, expresses a strong conviction that the "Clarity Act," a significant piece of US legislation pertaining to cryptocurrencies, has a 90% chance of being enacted by April.
-    **Reason Why it is Significant:** This is highly relevant to your interests in "Cryptocurrency" and "investment markets," as regulatory developments like the Clarity Act have a profound impact on the future and stability of the crypto space. It also relates to "technology" in the context of underlying blockchain and digital finance.
-    **URL:** https://www.investing.com/news/cryptocurrency-news/ripple-ceo-predicts-90-chance-of-us-crypto-bill-passage-by-april-4517544
+8.  **Original Number:** 118
+    **Title:** Samsung is adding Perplexity to Galaxy AI
+    **Description:** Samsung is reportedly integrating Perplexity, an advanced conversational AI answer engine, into its suite of Galaxy AI features across its mobile devices.
+    **Reason why it is significant:** This is a direct development concerning a specific and important AI model (Perplexity) and its integration into widely used consumer technology, showing how advanced AI is becoming a core part of everyday gadgets.
+    **URL:** https://www.theverge.com/tech/882921/samsung-is-adding-perplexity-to-galaxy-ai
 
-8.  **Original Number:** 29
-    **Title:** Trump targets Netflix board amid $108B bidding war for Warner Bros. Discovery
-    **Description:** Donald Trump has reportedly targeted the Netflix board during a massive $108 billion bidding war for Warner Bros. Discovery.
-    **Reason Why it is Significant:** While primarily corporate and political, the "investment markets" interest is relevant due to the sheer scale of the $108 billion bidding war, indicating significant activity and potential shifts in the media, entertainment, and streaming technology landscape, which can impact broader tech and investment trends.
-    **URL:** https://www.investing.com/news/politics-news/trump-targets-netflix-board-over-susan-rice-as-wbd-deal-hangs-in-the-balance-4517543
+9.  **Original Number:** 85
+    **Title:** How to Hide Google’s AI Overviews From Your Search Results
+    **Description:** An article providing a guide for users on how to effectively disable or hide Google's new AI Overviews feature from their search results pages.
+    **Reason why it is significant:** This addresses the practical aspect of user interaction and control over new AI features in widely adopted platforms, reflecting a common desire for customization when AI collides with daily digital experiences.
+    **URL:** https://www.wired.com/story/how-to-hide-google-ai-overviews-from-your-search-results/
+
+10. **Original Number:** 109
+    **Title:** I started using a self-hostable AI research app and I should have sooner
+    **Description:** An individual shares their positive experience and the significant benefits they've found from using a self-hostable application designed for AI research.
+    **Reason why it is significant:** This speaks to the practical utility of AI tools for research and personal projects, emphasizing the power of self-hosting (relevant for computer programming and IT security interests) and accessible AI for everyday users.
+    **URL:** https://www.makeuseof.com/started-using-self-hostable-app-for-research-should-have-sooner/
+
+11. **Original Number:** 130
+    **Title:** ‘Money's moving out of tech’: Wall Street weighs stock market winners amid the AI scare trade
+    **Description:** Wall Street analysts are currently evaluating which stocks will emerge as winners, as there are indications that investment capital might be shifting away from traditional tech companies, possibly due to what's being termed the "AI scare trade."
+    **Reason why it is significant:** This is directly relevant to investment markets, showing how investor sentiment around AI is impacting capital allocation and redefining perceived "winners" in the tech sector.
+    **URL:** https://finance.yahoo.com/news/moneys-moving-out-of-tech-wall-street-weighs-stock-market-winners-amid-the-ai-scare-trade-160024597.html
+
+12. **Original Number:** 133
+    **Title:** Prediction: This Artificial Intelligence (AI) Stock Will Outperform Alphabet in 2026
+    **Description:** An investment forecast predicts that a particular Artificial Intelligence stock is set to surpass the performance of tech giant Alphabet in the year 2026.
+    **Reason why it is significant:** This article focuses on specific investment opportunities and predictions within the rapidly evolving AI stock market, offering insights into potential high-growth areas compared to established tech leaders.
+    **URL:** https://finance.yahoo.com/news/prediction-artificial-intelligence-ai-stock-232000131.html
+
+13. **Original Number:** 135
+    **Title:** Infosys Limited (INFY) Collaborates With Anthropic
+    **Description:** Infosys Limited has announced a new collaboration with Anthropic, a prominent AI research and safety company known for its work on models like Claude.
+    **Reason why it is significant:** This highlights a significant partnership involving a key AI developer (Anthropic) and a major IT services provider (Infosys), indicating further integration of advanced AI (specifically Claude's developer) into enterprise solutions.
+    **URL:** https://finance.yahoo.com/news/infosys-limited-infy-collaborates-anthropic-190010516.html
+
+14. **Original Number:** 182
+    **Title:** Americans are using AI for financial advice more than you think
+    **Description:** A recent report indicates that a surprisingly high number of Americans are now utilizing artificial intelligence tools to seek and manage financial advice.
+    **Reason why it is significant:** This demonstrates the increasing penetration of AI into everyday life, particularly in the sensitive and crucial area of personal finance, showcasing how AI is empowering ordinary people with financial tools.
+    **URL:** https://news.google.com/rss/articles/CBMi0wFBVV95cUxPd3RBWURTbUhITjFXS01hbDhKWExWcUtYQzlZaWdGa3FuT3NFNjJiWlQ3YmZhUWFxWnZ4RFFkRi1KdFMtSl94NTZvb3BtY0o5U0J2TEhaeHc1TFNoQU16dkZYWVB4eGRFSm55OThHWVhLdnFpNEZuNmpuT09ZcWlZbGFiSWp6cExmaTRWeHlVSWdUV19kdHUwOGt5SWt2aHdjMDlOMV8yVkZpc2ZpdU1PYkdWM2hiVndwVHg0YzlRZE1qS2xVX1BCTHk1VXhUandvTFVR?oc=5
+
+15. **Original Number:** 193
+    **Title:** Infosys & Anthropic AI in Manufacturing, Telco & Finance
+    **Description:** This article details the strategic partnership between Infosys and Anthropic, focusing on the deployment and application of Anthropic's AI technology across key industries like manufacturing, telecommunications, and finance.
+    **Reason why it is significant:** It elaborates on the practical, industry-specific applications of a major AI developer (Anthropic), showing concrete examples of how advanced AI is transforming critical sectors.
+    **URL:** https://news.google.com/rss/articles/CBMijAFBVV95cUxNT1BlTjNGNmtjeHBmdS1TYlpnRjQ2cGo2QWM1ZjQ0bTlYa0JON25wQWx0aEZ3WGVlYTJ6S1JpV0ZYSzRJWUlZMENzSXlEUmJ6QmYzTGwtMFFnMTZSR2wyVGxYUURuT0VnVGZjYm5DUkJvM1pPczlfR1pSdV9VcE10MlRTb0E1MjZCSkstRw?oc=5
+
+16. **Original Number:** 202
+    **Title:** Why Asian banks struggle to embed AI in compliance
+    **Description:** An analytical piece exploring the various obstacles and challenges that Asian banking institutions encounter when attempting to integrate artificial intelligence into their stringent regulatory compliance frameworks.
+    **Reason why it is significant:** This provides valuable insights into the complexities of AI implementation in highly regulated environments like finance, touching upon both technological hurdles and IT security/compliance concerns.
+    **URL:** https://news.google.com/rss/articles/CBMirwFBVV95cUxOS19oLXI5UDl0STFCZTdwVUJpVG1fb1NhSlVqeUZaNEFWYmNEcU9EY1VlMWY5dDJsT08tRk1wOG95cTBnY0cySVdibkxEWGt2MmZ0clo0TDJVZ2pNeWFvOWs5YkwydUhTeW9EZEVSaTI4a2dJaFBCbFI0WHphSE5zb2dyVElSc1ZqYXVCdmZ4WFVPUGR6dmNSZlZLd1BFWFJwOElPZjJwTERCVWtHTkNn?oc=5
+
+17. **Original Number:** 204
+    **Title:** Stacks: $23 Million Series A Raised For Agentic Enterprise Finance Platform
+    **Description:** Stacks, a company focused on developing an "agentic" platform for enterprise finance, has successfully concluded a Series A funding round, raising $23 million.
+    **Reason why it is significant:** This is highly relevant for AI and finance, as "agentic" AI refers to intelligent, autonomous systems capable of complex decision-making, hinting at advanced robotics-like AI agents transforming financial operations.
+    **URL:** https://news.google.com/rss/articles/CBMimAFBVV95cUxQWkQyMFJzWDYyemFtc293dHB0S2pwOGZQOGxxZ2ZkelAzbE9LV3lUMGkyaVJtcUQzalhFQ21vMjF6cmRMZm1uRW1OZ1MyQlBOeWgzQnJ4TXUzRXhONXZxeHBTcnZqdTIzTi1FTUY1N01iVEhMclRRTkt2ZnFnMXVXNEZvX204YzE0MDJnd09pbE5ZZThBNFBkLdIBngFBVV95cUxQQ01IYjRxOTk2cHJYdkExeWVMX2R3ZVM2WGtydzU5RVhXUlRIZ0pjXw?oc=5
+
+18. **Original Number:** 212
+    **Title:** Walmart's AI push is leading to faster delivery times: CFO
+    **Description:** Walmart's Chief Financial Officer has stated that the company's strategic investments and advancements in artificial intelligence are directly resulting in quicker delivery times for its customers.
+    **Reason why it is significant:** This is a concrete example of AI's direct and positive impact on large-scale logistics and consumer services, showcasing how AI is used for practical improvements in operational efficiency.
+    **URL:** https://news.google.com/rss/articles/CBMihAFBVV95cUxNVzFwYXFhYXYzMmZWMExrZjRUclF4TGdpSWtGamowRG5vdU9yOTN1bEh4OGl2bGdWMWRyWnJ6WGdWbFFLQnhYQTUyUk5rRVRfckQ1cDUyODRKTTRDTjJSOWFPeWhxMUVLQVRBNjhROTlKQ3A4N2hlV3RFR2ZBUnpiYWJ1TmM?oc=5
+
+19. **Original Number:** 220
+    **Title:** Not your parents' financial playbook: author touts the power of artificial intelligence in managing money
+    **Description:** An author promotes the transformative capabilities of artificial intelligence in modern personal money management, suggesting it offers a revolutionary approach compared to traditional financial planning methods.
+    **Reason why it is significant:** This highlights the growing trend of individuals leveraging AI for personal financial tools, aligning with interests in how AI impacts everyday life and empowers ordinary people to manage their resources more effectively.
+    **URL:** https://news.google.com/rss/articles/CBMihAFBVV95cUxOa3NTVVZ4RjhxMGF3M1UwcjY5YksxRkp5ckp0TmpMWk9EMG5JdUw3Z3loNlZDMGtObXoxdlBTRzU1eng0TUs1NkM3dmZobHdGT0JrSmY4N2ZIeEJKWnVqXzNkTFhrT01OOXpEOTZCNVlTNzUzd2ZMMUJ6NlhPVWJvV0JqTWQ?oc=5
+
+20. **Original Number:** 246
+    **Title:** Blue Owl’s gated fund jolts private credit as AI bets collide with liquidity risks
+    **Description:** A fund managed by Blue Owl, which restricts investor withdrawals, has sent shockwaves through the private credit market amidst concerns that investments driven by AI strategies are clashing with inherent liquidity risks.
+    **Reason why it is significant:** This is a prime example of AI's direct influence on investment markets, specifically highlighting the potential risks and complexities when AI-driven investment strategies encounter real-world financial market dynamics like liquidity.
+    **URL:** https://seekingalpha.com/news/4554953-blue-owl-s-gated-fund-jolts-private-credit-as-ai-bets-collide-with-liquidity-risks?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news
+
+21. **Original Number:** 258
+    **Title:** How Switzerland is quietly pulling ahead of Europe in the AI race
+    **Description:** An article examining the strategies and developments that are positioning Switzerland as a burgeoning leader in the artificial intelligence sector across Europe.
+    **Reason why it is significant:** This is relevant for understanding the global landscape of AI development, national AI strategies, and the competitive "AI race" among different regions and countries.
+    **URL:** https://www.investing.com/news/stock-market-news/how-switzerland-is-quietly-pulling-ahead-of-europe-in-the-ai-race-4514540
+
+22. **Original Number:** 259
+    **Title:** Nvidia, software reports pose next tests for AI-sensitive stock market
+    **Description:** Upcoming earnings reports from key AI hardware manufacturer Nvidia and other software companies are expected to serve as crucial indicators for the stock market, which has become highly reactive to AI-related developments.
+    **Reason why it is significant:** This directly addresses the significant impact of major AI technology players (like Nvidia) and software performance on investment markets, crucial for understanding AI's financial influence and market trends.
+    **URL:** https://www.investing.com/news/stock-market-news/nvidia-software-reports-pose-next-tests-for-aisensitive-stock-market-4517563
+
+23. **Original Number:** 300
+    **Title:** “Só saberemos se a IA é uma bolha financeira quando estourar” (We'll only know if AI is a financial bubble when it bursts)
+    **Description:** An opinion piece discusses the speculative nature of the current AI investment boom, suggesting that its true character as a potential financial bubble will only become apparent if and when it collapses.
+    **Reason why it is significant:** This directly addresses the speculative aspect of AI investments, offering a critical perspective relevant to anyone interested in investment markets and the long-term financial stability of the AI sector.
+    **URL:** https://eco.sapo.pt/entrevista/so-saberemos-se-a-ia-e-uma-bolha-financeira-quando-estourar/
+
+24. **Original Number:** 318
+    **Title:** AI agent OpenClaw confirms ban on Bitcoin, crypto discussions in Discord
+    **Description:** The AI agent named "OpenClaw" has officially announced and implemented a ban on all discussions pertaining to Bitcoin and other cryptocurrencies within its Discord server.
+    **Reason why it is significant:** This presents an intriguing intersection of AI and cryptocurrency, demonstrating how AI systems or AI-powered platforms are beginning to enforce content moderation policies that directly impact crypto communities.
+    **URL:** https://cointelegraph.com/news/openclaw-discord-bans-bitcoin-crypto-discussions?utm_source=rss_feed&utm_medium=rss&at_campaign=rss_partner_inbound
+
+25. **Original Number:** 75
+    **Title:** Analysis: the crypto industry has spent $288M+ on the 2026 US midterms so far, over double the 2024 cycle; crypto PAC Fairshake is the US' fifth most-funded PAC
+    **Description:** An analysis reveals that the cryptocurrency industry has spent more than $288 million on the 2026 US midterm elections, a figure more than double that of the 2024 cycle, with crypto PAC Fairshake becoming one of the most heavily funded PACs in the US.
+    **Reason why it is significant:** This highlights the rapidly growing political influence and financial power of the cryptocurrency industry, which is crucial for understanding its future regulatory landscape and market dynamics.
+    **URL:** http://www.techmeme.com/260222/p8#a260222p8
+
+26. **Original Number:** 153
+    **Title:** XRP Ledger Sees Société Générale Launch First Euro Stablecoin
+    **Description:** Société Générale, a major French multinational investment bank, has announced the launch of its inaugural Euro stablecoin on the XRP Ledger blockchain.
+    **Reason why it is significant:** This is a significant development in cryptocurrency, showcasing the adoption of blockchain technology (specifically XRP Ledger) by traditional financial institutions for stablecoin issuance, bridging traditional finance with crypto innovation.
+    **URL:** https://finance.yahoo.com/news/xrp-ledger-sees-soci-t-223044689.html
+
+27. **Original Number:** 205
+    **Title:** XRP Ledger Launches 'Members-Only' Exchange For Banks, But XRP Can't Break $1.50
+    **Description:** The XRP Ledger has introduced a new exclusive exchange, accessible only to member banks, designed for institutional crypto transactions, though the native XRP token's price struggles to surpass the $1.50 mark.
+    **Reason why it is significant:** This signifies a further step in the integration of blockchain technology (XRP Ledger) into traditional banking, by providing regulated, members-only crypto exchange infrastructure for financial institutions, even as the associated token faces market challenges.
+    **URL:** https://news.google.com/rss/articles/CBMihAFBVV95cUxPdmRfSWZPbUhEMnFGTGYwOFdmb3AydzNBZXRxOEo4NkU5YkZpSTFqbGUya3c0MFRoZDA3MEV0QnhlTVNacE9DemN0SGFaYWxnX1pLUVFtSDZ0dmxuaGtrRjlEMWsxVGRmSGZUV0kyNHhqVDRRaktyYnRLRnFIdFZHc1BwLXg?oc=5
+
+28. **Original Number:** 69
+    **Title:** Documents submitted by Waymo and Tesla to the US government reveal new info about the remote assistance programs for their robotaxis, staffed by human operators
+    **Description:** Recently submitted documents to the US government by Waymo and Tesla provide new details regarding their robotaxi services, confirming that human operators are employed in remote assistance programs to support these autonomous vehicles.
+    **Reason why it is significant:** This is crucial for understanding the current state of autonomous vehicles and robotics, revealing the integral "human-in-the-loop" aspect of self-driving technology and its implications for AI oversight and safety.
+    **URL:** http://www.techmeme.com/260222/p14#a260222p14
+
+29. **Original Number:** 37
+    **Title:** Cientistas do Porto descobrem pequeno código que controla genes e influencia cancro (Porto scientists discover small code that controls genes and influences cancer)
+    **Description:** Scientists in Porto have identified a previously unknown, small genetic "code" that plays a crucial role in regulating gene activity and has an impact on the development of cancer.
+    **Reason why it is significant:** This represents a significant health breakthrough in genetic research and cancer understanding. The use of "code" directly aligns with interests in computer programming and the underlying mechanisms of biology, merging health and tech.
+    **URL:** https://www.publico.pt/2026/02/22/ciencia/noticia/cientistas-porto-descobrem-codigo-controla-genes-influencia-cancro-2163984
+
+30. **Original Number:** 49
+    **Title:** Podemos atrasar o envelhecimento: Será também possível reverter o processo? (Can we delay aging: Will it also be possible to reverse the process?)
+    **Description:** This article discusses the current scientific understanding and future possibilities regarding the delay of the human aging process, and speculates on whether its reversal might eventually be achievable.
+    **Reason why it is significant:** This explores cutting-edge health breakthroughs and biotechnological possibilities related to aging, a topic of immense scientific and technological interest given its implications for human health and longevity.
+    **URL:** https://sicnoticias.pt/programas/admiravel-mundo-novo1/2026-02-22-video-podemos-atrasar-o-envelhecimento-sera-tambem-possivel-reverter-o-processo--34044e29
