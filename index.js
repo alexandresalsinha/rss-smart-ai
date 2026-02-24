@@ -5,6 +5,10 @@ require('dotenv').config();
 const OpenAI = require('openai');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const textToSpeech = require('@google-cloud/text-to-speech');
+const { TextToSpeechLongAudioSynthesizeClient } = require('@google-cloud/text-to-speech');
+const { Storage } = require('@google-cloud/storage');
+
+const path = require('path');
 
 const parser = new Parser();
 const openai = new OpenAI({
@@ -342,7 +346,10 @@ const analysisPrompt = `
     - The URL
     
 
-    You are helping me decide if this article is something I would be interested in reading. I am Alexandre Salsinha. I am interested in artificial intelligence, music technology, technology, gadgets, drones, vibe coding, investment markets, robotics, computer programming,  technology ,Cryptocurrency, music production, IT Security,  Virtual Reality and augmented really, and finally,health breakthroughs . I am also interested in any new developments with ChatGPT, Gemini, Claude, MCP, and Perplexity. I'm very interested in when AI collides with society in interesting ways, or cool stuff that everyday people can do with AI.
+    You are helping me decide if this article is something I would be interested in reading. I am Alexandre Salsinha. 
+    I am interested in artificial intelligence, music technology, technology, gadgets, drones, vibe coding, investment markets, robotics, computer programming,  
+    technology ,Cryptocurrency, music production, life hacks, productivity tips and apps, IT Security,  Virtual Reality and augmented really, and finally,health breakthroughs . 
+    I am also interested in any new developments with ChatGPT, Gemini, Claude, MCP, and Perplexity. I'm very interested in when AI collides with society in interesting ways, or cool stuff that everyday people can do with AI.
 
     I'm not interested in these kinds of articles:
     - Gadgets that aren't innovative
@@ -434,19 +441,84 @@ async function analyzeWithGemini(newsItems, dateStamp) {
 
         // Generate audio from speech text
         const audioFile = `top_news_analysis_gemini_${dateStamp}.mp3`;
-        await generateAudioFromText(speechTextFile, audioFile);
+        await synthesizeLongAudio(speechTextFile, audioFile);
 
     } catch (err) {
-
-
-
-
-
-
-
-
         console.error('Error during Gemini analysis:', err.message);
     }
+}
+
+async function synthesizeLongAudio(speechTextFile, audioFile) {
+  const client = new TextToSpeechLongAudioSynthesizeClient();
+  const storage = new Storage();
+
+  // Load configuration from .env
+  const bucketName = process.env.GCS_BUCKET_NAME;
+  const inputFilePath = speechTextFile;
+  const outputGcsUriPrefix = process.env.OUTPUT_GCS_URI_PREFIX || `gs://${bucketName}/output/`;
+
+  if (!bucketName) {
+    console.error('Error: GCS_BUCKET_NAME is not set in .env file.');
+    process.exit(1);
+  }
+
+  if (!fs.existsSync(inputFilePath)) {
+    console.error(`Error: Input file "${inputFilePath}" not found.`);
+    process.exit(1);
+  }
+
+  const text = fs.readFileSync(inputFilePath, 'utf8');
+
+  console.log(`Starting long-form synthesis for: ${inputFilePath}`);
+  console.log(`Character count: ${text.length}`);
+
+  const parent = `projects/${await client.getProjectId()}/locations/global`;
+
+  const outputFileName = audioFile;
+  const outputGcsUri = `${outputGcsUriPrefix}${outputFileName}`;
+
+  const request = {
+    parent: parent,
+    input: {
+      text: text,
+    },
+    audioConfig: {
+      audioEncoding: 'LINEAR16', // High quality WAV
+    },
+    voice: {
+      languageCode: 'en-US',
+      name: 'en-US-Standard-A', // You can change this to your preferred voice
+    },
+    outputGcsUri: outputGcsUri,
+  };
+
+  try {
+    // This is a Long Running Operation (LRO)
+    const [operation] = await client.synthesizeLongAudio(request);
+
+    console.log(`Operation started. LRO Name: ${operation.name}`);
+    console.log('Waiting for operation to complete...');
+
+    await operation.promise();
+
+    console.log('Synthesis complete!');
+    console.log(`Audio stored at: ${outputGcsUri}`);
+
+    // Download the file
+    console.log(`Downloading audio file to local directory...`);
+    const localFileName = path.basename(outputGcsUri);
+    const options = {
+      destination: localFileName,
+    };
+
+    // Extract bucket and file path from URI (gs://bucket/path/to/file)
+    const gcsPath = outputGcsUri.replace(`gs://${bucketName}/`, '');
+    await storage.bucket(bucketName).file(gcsPath).download(options);
+
+    console.log(`Successfully downloaded: ${localFileName}`);
+  } catch (err) {
+    console.error('ERROR:', err);
+  }
 }
 
 async function main() {
