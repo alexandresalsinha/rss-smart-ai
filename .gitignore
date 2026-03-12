@@ -2,6 +2,7 @@
 *.html
 *.mp3
 *.txt
+*.wav
 # Logs
 logs
 *.log
