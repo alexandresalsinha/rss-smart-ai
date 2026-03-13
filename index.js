@@ -578,8 +578,6 @@ async function synthesizeLongAudio(speechTextFile, audioFile) {
 }
 
 async function main() {
-    await uploadToDrive("top_news_analysis_gemini_2026-03-12.wav");
-    return;
     const feeds = await readFeeds('feeds.txt');
     console.log(`Found ${feeds.length} feeds.`);
 
