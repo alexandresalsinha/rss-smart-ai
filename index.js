@@ -7,6 +7,8 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const textToSpeech = require('@google-cloud/text-to-speech');
 const { TextToSpeechLongAudioSynthesizeClient } = require('@google-cloud/text-to-speech');
 const { Storage } = require('@google-cloud/storage');
+const { google } = require('googleapis');
+
 
 const path = require('path');
 
@@ -86,7 +88,7 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
     const articlesHTML = articleMatches.map((article, index) => {
         let title = '';
         let content = article;
-        
+
         // For Gemini format: extract title from **Title:** field
         const geminiTitleMatch = article.match(/\*\*Title:\*\*\s+(.+?)(?:\n|$)/);
         if (geminiTitleMatch) {
@@ -100,11 +102,11 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
             // Remove markdown bold formatting if present
             title = title.replace(/\*\*/g, '');
         }
-        
+
         // Extract URL if present
         const urlMatch = article.match(/(https?:\/\/[^\s\n]+)/);
         const url = urlMatch ? urlMatch[1] : '';
-        
+
 
         return `
         <div class="article">
@@ -282,22 +284,22 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
 function exportToSpeechText(analysisText, textFile) {
     // Remove URLs (https://... and http://...)
     let cleanText = analysisText.replace(/https?:\/\/[^\s\n]+/g, '');
-    
+
     // Remove all asterisks (used for markdown formatting)
     cleanText = cleanText.replace(/\*/g, '');
-    
+
     // Remove specific label strings
     cleanText = cleanText.replace(/URL:\s*/g, '');
     cleanText = cleanText.replace(/Description:\s*/g, '');
     cleanText = cleanText.replace(/Title:\s*/g, '');
-    
+
     // Clean up excessive whitespace and newlines
     cleanText = cleanText.replace(/\n\s*\n\s*\n/g, '\n\n'); // Replace 3+ newlines with 2
     cleanText = cleanText.trim();
-    
+
     fs.writeFileSync(textFile, cleanText);
     console.log(`Speech-ready text exported to ${textFile}`);
-    
+
     return cleanText;
 }
 
@@ -310,10 +312,10 @@ async function generateAudioFromText(textFile, audioFile) {
 
     try {
         console.log('Generating audio from text using Google Text-to-Speech...');
-        
+
         const text = fs.readFileSync(textFile, 'utf8');
         const client = new textToSpeech.TextToSpeechClient();
-        
+
         const request = {
             input: { text: text },
             voice: {
@@ -323,13 +325,62 @@ async function generateAudioFromText(textFile, audioFile) {
             },
             audioConfig: { audioEncoding: 'MP3' },
         };
-        
+
         const [response] = await client.synthesizeSpeech(request);
         await fs.promises.writeFile(audioFile, response.audioContent, 'binary');
-        
+
         console.log(`Audio saved to ${audioFile}`);
+
+        // Upload to Google Drive if configured
+        if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
+            await uploadToDrive(audioFile);
+        }
     } catch (err) {
         console.error('Error generating audio:', err.message);
+    }
+}
+
+async function uploadToDrive(filePath) {
+    try {
+        console.log(`Uploading ${filePath} to Google Drive...`);
+
+        const oauth2Client = new google.auth.OAuth2(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_CLIENT_SECRET,
+            'urn:ietf:wg:oauth:2.0:oob'
+        );
+
+        oauth2Client.setCredentials({
+            refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+        });
+
+        const drive = google.drive({ version: 'v3', auth: oauth2Client });
+
+        const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+        const fileMetadata = {
+            name: path.basename(filePath),
+            parents: [folderId],
+        };
+
+        const media = {
+            mimeType: filePath.endsWith('.mp3') ? 'audio/mpeg' : 'audio/wav',
+            body: fs.createReadStream(filePath),
+        };
+
+        const response = await drive.files.create({
+            requestBody: fileMetadata,
+            media: media,
+            fields: 'id',
+            supportsAllDrives: true,
+        });
+
+        console.log(`Successfully uploaded: ${filePath} (Drive ID: ${response.data.id})`);
+        return response.data.id;
+    } catch (err) {
+        console.error('Error uploading to Google Drive:', err.message);
+        if (err.response && err.response.data) {
+            console.error('Detailed Error:', JSON.stringify(err.response.data, null, 2));
+        }
     }
 }
 
@@ -422,7 +473,7 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
         const result = await model.generateContent(prompt);
         const analysisResult = result.response.text();
-        
+
         console.log('\n--- Top 30 News of the Day (Gemini) ---\n');
         console.log(analysisResult);
         console.log('\n------------------------------\n');
@@ -449,76 +500,81 @@ async function analyzeWithGemini(newsItems, dateStamp) {
 }
 
 async function synthesizeLongAudio(speechTextFile, audioFile) {
-  const client = new TextToSpeechLongAudioSynthesizeClient();
-  const storage = new Storage();
+    const client = new TextToSpeechLongAudioSynthesizeClient();
+    const storage = new Storage();
 
-  // Load configuration from .env
-  const bucketName = process.env.GCS_BUCKET_NAME;
-  const inputFilePath = speechTextFile;
-  const outputGcsUriPrefix = process.env.OUTPUT_GCS_URI_PREFIX || `gs://${bucketName}/output/`;
+    // Load configuration from .env
+    const bucketName = process.env.GCS_BUCKET_NAME;
+    const inputFilePath = speechTextFile;
+    const outputGcsUriPrefix = process.env.OUTPUT_GCS_URI_PREFIX || `gs://${bucketName}/output/`;
 
-  if (!bucketName) {
-    console.error('Error: GCS_BUCKET_NAME is not set in .env file.');
-    process.exit(1);
-  }
+    if (!bucketName) {
+        console.error('Error: GCS_BUCKET_NAME is not set in .env file.');
+        process.exit(1);
+    }
 
-  if (!fs.existsSync(inputFilePath)) {
-    console.error(`Error: Input file "${inputFilePath}" not found.`);
-    process.exit(1);
-  }
+    if (!fs.existsSync(inputFilePath)) {
+        console.error(`Error: Input file "${inputFilePath}" not found.`);
+        process.exit(1);
+    }
 
-  const text = fs.readFileSync(inputFilePath, 'utf8');
+    const text = fs.readFileSync(inputFilePath, 'utf8');
 
-  console.log(`Starting long-form synthesis for: ${inputFilePath}`);
-  console.log(`Character count: ${text.length}`);
+    console.log(`Starting long-form synthesis for: ${inputFilePath}`);
+    console.log(`Character count: ${text.length}`);
 
-  const parent = `projects/${await client.getProjectId()}/locations/global`;
+    const parent = `projects/${await client.getProjectId()}/locations/global`;
 
-  const outputFileName = audioFile;
-  const outputGcsUri = `${outputGcsUriPrefix}${outputFileName}`;
+    const outputFileName = audioFile;
+    const outputGcsUri = `${outputGcsUriPrefix}${outputFileName}`;
 
-  const request = {
-    parent: parent,
-    input: {
-      text: text,
-    },
-    audioConfig: {
-      audioEncoding: 'LINEAR16', // High quality WAV
-    },
-    voice: {
-      languageCode: 'en-US',
-      name: 'en-US-Standard-A', // You can change this to your preferred voice
-    },
-    outputGcsUri: outputGcsUri,
-  };
-
-  try {
-    // This is a Long Running Operation (LRO)
-    const [operation] = await client.synthesizeLongAudio(request);
-
-    console.log(`Operation started. LRO Name: ${operation.name}`);
-    console.log('Waiting for operation to complete...');
-
-    await operation.promise();
-
-    console.log('Synthesis complete!');
-    console.log(`Audio stored at: ${outputGcsUri}`);
-
-    // Download the file
-    console.log(`Downloading audio file to local directory...`);
-    const localFileName = path.basename(outputGcsUri);
-    const options = {
-      destination: localFileName,
+    const request = {
+        parent: parent,
+        input: {
+            text: text,
+        },
+        audioConfig: {
+            audioEncoding: 'LINEAR16', // High quality WAV
+        },
+        voice: {
+            languageCode: 'en-US',
+            name: 'en-US-Standard-A', // You can change this to your preferred voice
+        },
+        outputGcsUri: outputGcsUri,
     };
 
-    // Extract bucket and file path from URI (gs://bucket/path/to/file)
-    const gcsPath = outputGcsUri.replace(`gs://${bucketName}/`, '');
-    await storage.bucket(bucketName).file(gcsPath).download(options);
+    try {
+        // This is a Long Running Operation (LRO)
+        const [operation] = await client.synthesizeLongAudio(request);
 
-    console.log(`Successfully downloaded: ${localFileName}`);
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
+        console.log(`Operation started. LRO Name: ${operation.name}`);
+        console.log('Waiting for operation to complete...');
+
+        await operation.promise();
+
+        console.log('Synthesis complete!');
+        console.log(`Audio stored at: ${outputGcsUri}`);
+
+        // Download the file
+        console.log(`Downloading audio file to local directory...`);
+        const localFileName = path.basename(outputGcsUri);
+        const options = {
+            destination: localFileName,
+        };
+
+        // Extract bucket and file path from URI (gs://bucket/path/to/file)
+        const gcsPath = outputGcsUri.replace(`gs://${bucketName}/`, '');
+        await storage.bucket(bucketName).file(gcsPath).download(options);
+
+        console.log(`Successfully downloaded: ${localFileName}`);
+
+        // Upload to Google Drive if configured
+        if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
+            await uploadToDrive(localFileName);
+        }
+    } catch (err) {
+        console.error('ERROR:', err);
+    }
 }
 
 async function main() {
@@ -541,7 +597,7 @@ async function main() {
     if (todaysNews.length > 0) {
         // Get the API provider from command line argument
         const apiProvider = process.argv[2]?.toLowerCase() || 'openai';
-        
+
         if (apiProvider === 'gemini') {
             await analyzeWithGemini(todaysNews, dateStamp);
         } else if (apiProvider === 'openai') {
