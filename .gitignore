@@ -3,6 +3,7 @@
 *.mp3
 *.txt
 *.wav
+gen-lang-client-0664784003-408acc5592e9.json
 # Logs
 logs
 *.log
