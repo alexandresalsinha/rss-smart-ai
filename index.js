@@ -1,3 +1,6 @@
+const path = require('path');
+process.chdir(__dirname);
+
 const fs = require('fs');
 const Parser = require('rss-parser');
 const ExcelJS = require('exceljs');
@@ -8,9 +11,6 @@ const textToSpeech = require('@google-cloud/text-to-speech');
 const { TextToSpeechLongAudioSynthesizeClient } = require('@google-cloud/text-to-speech');
 const { Storage } = require('@google-cloud/storage');
 const { google } = require('googleapis');
-
-
-const path = require('path');
 
 const parser = new Parser();
 const openai = new OpenAI({
