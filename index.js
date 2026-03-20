@@ -51,6 +51,14 @@ function isToday(date) {
         date.getFullYear() === today.getFullYear();
 }
 
+function isYesterday(date) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return date.getDate() === yesterday.getDate() &&
+        date.getMonth() === yesterday.getMonth() &&
+        date.getFullYear() === yesterday.getFullYear();
+}
+
 function getDateStamp(date = new Date()) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -58,6 +66,12 @@ function getDateStamp(date = new Date()) {
     return `${year}-${month}-${day}`;
 }
 
+function getYesterdayDateStamp(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate() - 1).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 async function exportToExcel(newsItems, outputFile) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Today\'s News');
@@ -362,8 +376,13 @@ async function uploadToDrive(filePath) {
             parents: [folderId],
         };
 
+        let mimeType = 'application/octet-stream';
+        if (filePath.endsWith('.mp3')) mimeType = 'audio/mpeg';
+        else if (filePath.endsWith('.wav')) mimeType = 'audio/wav';
+        else if (filePath.endsWith('.html')) mimeType = 'text/html';
+
         const media = {
-            mimeType: filePath.endsWith('.mp3') ? 'audio/mpeg' : 'audio/wav',
+            mimeType: mimeType,
             body: fs.createReadStream(filePath),
         };
 
@@ -444,6 +463,10 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
         const htmlFile = `top_news_analysis_${dateStamp}.html`;
         exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o');
 
+        if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
+            await uploadToDrive(htmlFile);
+        }
+
         // Export to speech-ready text
         const speechTextFile = `top_news_analysis_speech_${dateStamp}.txt`;
         exportToSpeechText(analysisResult, speechTextFile);
@@ -485,6 +508,10 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         // Export to HTML
         const htmlFile = `top_news_analysis_gemini_${dateStamp}.html`;
         exportToHTML(analysisResult, htmlFile, 'Google Gemini');
+
+        if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
+            await uploadToDrive(htmlFile);
+        }
 
         // Export to speech-ready text
         const speechTextFile = `top_news_analysis_gemini_speech_${dateStamp}.txt`;
@@ -588,11 +615,11 @@ async function main() {
         allNews = allNews.concat(news);
     }
 
-    const todaysNews = allNews.filter(item => isToday(item.date));
-    console.log(`Found ${todaysNews.length} news items from today.`);
+    const todaysNews = allNews.filter(item => isYesterday(item.date));
+    console.log(`Found ${todaysNews.length} news items from yesterday.`);
 
-    const dateStamp = getDateStamp();
-    await exportToExcel(todaysNews, `news_today_${dateStamp}.xlsx`);
+    const dateStamp = getYesterdayDateStamp();
+    await exportToExcel(todaysNews, `news_yesterday_${dateStamp}.xlsx`);
 
     if (todaysNews.length > 0) {
         // Get the API provider from command line argument
