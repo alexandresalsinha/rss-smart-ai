@@ -91,7 +91,7 @@ async function main() {
         //     ? `Please summarize the following article in a comprehensive paragraph. \n\nTitle: ${article.title}\nURL: ${article.url}\n\nArticle Text:\n${contentToSummarize}`
         //     : `Please provide a comprehensive summary of the article at this URL, based on the title and your knowledge. \n\nTitle: ${article.title}\nURL: ${article.url}`;
 
-        const prompt = `summarize this url "${article.url}" by giving the TL;DR and Key Takeaways in bullet points. Maintaine the links.`;
+        const prompt = `summarize this url "${article.url}" by giving the TL;DR and Key Takeaways in bullet points.`;
 
 
         try {
@@ -112,14 +112,23 @@ async function main() {
     const dateStamp = new Date().toISOString().split('T')[0];
     const outputFile = `${outputPrefix}_detailed_${dateStamp}.html`.replace(/\\/g, '/').split('/').pop();
 
-    let articlesHTML = summaries.map(article => `
+    let articlesHTML = summaries.map(article => {
+        let formattedSummary = article.summary
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\n\s*[\*\-]\s+/g, '<br/><br/>&bull; ')
+            .replace(/^\s*[\*\-]\s+/g, '&bull; ')
+            .replace(/\n/g, '<br/>');
+
+        return `
         <div class="article">
             <div class="article-number">${article.number}</div>
             <h3 class="article-title">${article.title}</h3>
-            <div class="article-content">${article.summary.replace(/\\n/g, '<br/>')}</div>
+            <div class="article-content">${formattedSummary}</div>
             <a href="${article.url}" target="_blank" class="article-link">Original Article →</a>
         </div>
-    `).join('');
+        `;
+    }).join('');
 
     const outputHtml = `<!DOCTYPE html>
 <html lang="en">
