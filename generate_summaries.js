@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { TextToSpeechLongAudioSynthesizeClient } = require('@google-cloud/text-to-speech');
+const { Storage } = require('@google-cloud/storage');
+const { google } = require('googleapis');
 
 const argv = yargs(hideBin(process.argv))
     .option('file', {
@@ -23,6 +26,133 @@ const argv = yargs(hideBin(process.argv))
     .argv;
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+async function uploadToDrive(filePath) {
+    try {
+        console.log(`Uploading ${filePath} to Google Drive...`);
+
+        const oauth2Client = new google.auth.OAuth2(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_CLIENT_SECRET,
+            'urn:ietf:wg:oauth:2.0:oob'
+        );
+
+        oauth2Client.setCredentials({
+            refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+        });
+
+        const drive = google.drive({ version: 'v3', auth: oauth2Client });
+
+        const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+        const fileMetadata = {
+            name: path.basename(filePath),
+            parents: [folderId],
+        };
+
+        let mimeType = 'application/octet-stream';
+        if (filePath.endsWith('.mp3')) mimeType = 'audio/mpeg';
+        else if (filePath.endsWith('.wav')) mimeType = 'audio/wav';
+        else if (filePath.endsWith('.html')) mimeType = 'text/html';
+
+        const media = {
+            mimeType: mimeType,
+            body: fs.createReadStream(filePath),
+        };
+
+        const response = await drive.files.create({
+            requestBody: fileMetadata,
+            media: media,
+            fields: 'id',
+            supportsAllDrives: true,
+        });
+
+        console.log(`Successfully uploaded: ${filePath} (Drive ID: ${response.data.id})`);
+        return response.data.id;
+    } catch (err) {
+        console.error('Error uploading to Google Drive:', err.message);
+        if (err.response && err.response.data) {
+            console.error('Detailed Error:', JSON.stringify(err.response.data, null, 2));
+        }
+    }
+}
+
+async function synthesizeLongAudio(speechTextFile, audioFile) {
+    const client = new TextToSpeechLongAudioSynthesizeClient();
+    const storage = new Storage();
+
+    // Load configuration from .env
+    const bucketName = process.env.GCS_BUCKET_NAME;
+    const inputFilePath = speechTextFile;
+    const outputGcsUriPrefix = process.env.OUTPUT_GCS_URI_PREFIX || `gs://${bucketName}/output/`;
+
+    if (!bucketName) {
+        console.error('Error: GCS_BUCKET_NAME is not set in .env file.');
+        process.exit(1);
+    }
+
+    if (!fs.existsSync(inputFilePath)) {
+        console.error(`Error: Input file "${inputFilePath}" not found.`);
+        process.exit(1);
+    }
+
+    const text = fs.readFileSync(inputFilePath, 'utf8');
+
+    console.log(`Starting long-form synthesis for: ${inputFilePath}`);
+    console.log(`Character count: ${text.length}`);
+
+    const parent = `projects/${await client.getProjectId()}/locations/global`;
+
+    const outputFileName = audioFile;
+    const outputGcsUri = `${outputGcsUriPrefix}${outputFileName}`;
+
+    const request = {
+        parent: parent,
+        input: {
+            text: text,
+        },
+        audioConfig: {
+            audioEncoding: 'LINEAR16', // High quality WAV
+        },
+        voice: {
+            languageCode: 'en-US',
+            name: 'en-US-Standard-A', // You can change this to your preferred voice
+        },
+        outputGcsUri: outputGcsUri,
+    };
+
+    try {
+        // This is a Long Running Operation (LRO)
+        const [operation] = await client.synthesizeLongAudio(request);
+
+        console.log(`Operation started. LRO Name: ${operation.name}`);
+        console.log('Waiting for operation to complete...');
+
+        await operation.promise();
+
+        console.log('Synthesis complete!');
+        console.log(`Audio stored at: ${outputGcsUri}`);
+
+        // Download the file
+        console.log(`Downloading audio file to local directory...`);
+        const localFileName = path.basename(outputGcsUri);
+        const options = {
+            destination: localFileName,
+        };
+
+        // Extract bucket and file path from URI (gs://bucket/path/to/file)
+        const gcsPath = outputGcsUri.replace(`gs://${bucketName}/`, '');
+        await storage.bucket(bucketName).file(gcsPath).download(options);
+
+        console.log(`Successfully downloaded: ${localFileName}`);
+
+        // Upload to Google Drive if configured
+        if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
+            await uploadToDrive(localFileName);
+        }
+    } catch (err) {
+        console.error('ERROR:', err);
+    }
+}
 
 async function extractTextFromUrl(url) {
     try {
@@ -183,6 +313,10 @@ async function main() {
 
     fs.writeFileSync(outputFile, outputHtml);
     console.log(`HTML summaries saved to ${outputFile}`);
+
+    // Generate audio from speech text
+    const audioFile = `${outputPrefix}_speech_${dateStamp}.mp3`.replace(/\\/g, '/').split('/').pop();
+    await synthesizeLongAudio(outputTextFile, audioFile);
 }
 
 main();
