@@ -167,8 +167,22 @@ async function main() {
 </body>
 </html>`;
 
+    let textContent = summaries.map(article => {
+        let plainTextSummary = article.summary
+            .replace(/\*\*/g, '')
+            .replace(/\*/g, '')
+            .replace(/#/g, '')
+            .replace(/[\-\+]\s/g, '')
+            .trim();
+        return `Article ${article.number}. ${article.title}.\n\n${plainTextSummary}`;
+    }).join('\n\nNext Article.\n\n');
+
+    const outputTextFile = `${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
+    fs.writeFileSync(outputTextFile, textContent);
+    console.log(`Speech summaries saved to ${outputTextFile}`);
+
     fs.writeFileSync(outputFile, outputHtml);
-    console.log(`Summaries saved to ${outputFile}`);
+    console.log(`HTML summaries saved to ${outputFile}`);
 }
 
 main();
