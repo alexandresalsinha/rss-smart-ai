@@ -314,6 +314,11 @@ async function main() {
     fs.writeFileSync(outputFile, outputHtml);
     console.log(`HTML summaries saved to ${outputFile}`);
 
+    // Upload HTML to Google Drive if configured
+    if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
+        await uploadToDrive(outputFile);
+    }
+
     // Generate audio from speech text
     const audioFile = `${outputPrefix}_speech_${dateStamp}.mp3`.replace(/\\/g, '/').split('/').pop();
     await synthesizeLongAudio(outputTextFile, audioFile);
