@@ -67,9 +67,11 @@ function getDateStamp(date = new Date()) {
 }
 
 function getYesterdayDateStamp(date = new Date()) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate() - 1).padStart(2, '0');
+    const yesterday = new Date(date);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const year = yesterday.getFullYear();
+    const month = String(yesterday.getMonth() + 1).padStart(2, '0');
+    const day = String(yesterday.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
 async function exportToExcel(newsItems, outputFile) {
@@ -354,6 +356,8 @@ async function generateAudioFromText(textFile, audioFile) {
     }
 }
 
+let cachedDailyFolderId = null;
+
 async function uploadToDrive(filePath) {
     try {
         console.log(`Uploading ${filePath} to Google Drive...`);
@@ -370,10 +374,47 @@ async function uploadToDrive(filePath) {
 
         const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
-        const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+        const baseFolderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+        let targetFolderId = baseFolderId;
+
+        try {
+            if (cachedDailyFolderId) {
+                targetFolderId = cachedDailyFolderId;
+            } else {
+                const folderName = getYesterdayDateStamp();
+                const res = await drive.files.list({
+                    q: `name = '${folderName}' and '${baseFolderId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
+                    fields: 'files(id, name)',
+                    supportsAllDrives: true,
+                    includeItemsFromAllDrives: true,
+                });
+
+                if (res.data.files && res.data.files.length > 0) {
+                    targetFolderId = res.data.files[0].id;
+                    cachedDailyFolderId = targetFolderId;
+                } else {
+                    console.log(`Creating folder '${folderName}' in Google Drive...`);
+                    const folderMetadata = {
+                        name: folderName,
+                        mimeType: 'application/vnd.google-apps.folder',
+                        parents: [baseFolderId]
+                    };
+                    const folder = await drive.files.create({
+                        requestBody: folderMetadata,
+                        fields: 'id',
+                        supportsAllDrives: true,
+                    });
+                    targetFolderId = folder.data.id;
+                    cachedDailyFolderId = targetFolderId;
+                }
+            }
+        } catch (folderErr) {
+            console.error('Error finding or creating daily folder. Falling back to base folder:', folderErr.message);
+        }
+
         const fileMetadata = {
             name: path.basename(filePath),
-            parents: [folderId],
+            parents: [targetFolderId],
         };
 
         let mimeType = 'application/octet-stream';
