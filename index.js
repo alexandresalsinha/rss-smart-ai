@@ -407,6 +407,12 @@ async function uploadToDrive(filePath) {
                     targetFolderId = folder.data.id;
                     cachedDailyFolderId = targetFolderId;
                 }
+
+                try {
+                    fs.writeFileSync('daily_folder_id.txt', cachedDailyFolderId);
+                } catch (err) {
+                    console.error('Failed to save daily folder ID to text file:', err.message);
+                }
             }
         } catch (folderErr) {
             console.error('Error finding or creating daily folder. Falling back to base folder:', folderErr.message);
@@ -557,7 +563,7 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = `top_news_analysis_gemini_${dateStamp}.html`;
+        const htmlFile = `top_news_gemini_${dateStamp}.html`;
         exportToHTML(analysisResult, htmlFile, 'Google Gemini');
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
@@ -569,7 +575,7 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = `top_news_analysis_gemini_${dateStamp}.mp3`;
+        const audioFile = `top_news_gemini_${dateStamp}.mp3`;
         await synthesizeLongAudio(speechTextFile, audioFile);
 
     } catch (err) {

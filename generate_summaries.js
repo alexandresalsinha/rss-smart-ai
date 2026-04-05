@@ -43,7 +43,19 @@ async function uploadToDrive(filePath) {
 
         const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
-        const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+        let folderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+
+        try {
+            if (fs.existsSync('daily_folder_id.txt')) {
+                const dailyId = fs.readFileSync('daily_folder_id.txt', 'utf8').trim();
+                if (dailyId) {
+                    folderId = dailyId;
+                }
+            }
+        } catch (e) {
+            console.error('Could not read daily_folder_id.txt:', e.message);
+        }
+
         const fileMetadata = {
             name: path.basename(filePath),
             parents: [folderId],
@@ -240,7 +252,7 @@ async function main() {
 
     const outputPrefix = filePath.substring(0, filePath.lastIndexOf('.')) || filePath;
     const dateStamp = new Date().toISOString().split('T')[0];
-    const outputFile = `${outputPrefix}_detailed_${dateStamp}.html`.replace(/\\/g, '/').split('/').pop();
+    const outputFile = "summaries_" + `${outputPrefix}_${dateStamp}.html`.replace(/\\/g, '/').split('/').pop();
 
     let articlesHTML = summaries.map(article => {
         let formattedSummary = article.summary
@@ -307,7 +319,7 @@ async function main() {
         return `Article ${article.number}. ${article.title}.\n\n${plainTextSummary}`;
     }).join('\n\nNext Article.\n\n');
 
-    const outputTextFile = `${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
+    const outputTextFile = `summaries_${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
     fs.writeFileSync(outputTextFile, textContent);
     console.log(`Speech summaries saved to ${outputTextFile}`);
 
@@ -320,7 +332,7 @@ async function main() {
     }
 
     // Generate audio from speech text
-    const audioFile = `${outputPrefix}_speech_${dateStamp}.mp3`.replace(/\\/g, '/').split('/').pop();
+    const audioFile = "summaries_" + `${outputPrefix}_speech_${dateStamp}.mp3`.replace(/\\/g, '/').split('/').pop();
     await synthesizeLongAudio(outputTextFile, audioFile);
 }
 
