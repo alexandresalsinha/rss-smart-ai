@@ -319,7 +319,7 @@ async function main() {
         return `Article ${article.number}. ${article.title}.\n\n${plainTextSummary}`;
     }).join('\n\nNext Article.\n\n');
 
-    const outputTextFile = `summaries_${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
+    const outputTextFile = "summaries_" + `${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
     fs.writeFileSync(outputTextFile, textContent);
     console.log(`Speech summaries saved to ${outputTextFile}`);
 
