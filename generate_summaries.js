@@ -25,6 +25,8 @@ const argv = yargs(hideBin(process.argv))
     .alias('help', 'h')
     .argv;
 
+
+const filesNamesPrefix = 'all_summaries_';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function uploadToDrive(filePath) {
@@ -252,7 +254,7 @@ async function main() {
 
     const outputPrefix = filePath.substring(0, filePath.lastIndexOf('.')) || filePath;
     const dateStamp = new Date().toISOString().split('T')[0];
-    const outputFile = "summaries_" + `${outputPrefix}_${dateStamp}.html`.replace(/\\/g, '/').split('/').pop();
+    const outputFile = filesNamesPrefix + `${outputPrefix}_${dateStamp}.html`.replace(/\\/g, '/').split('/').pop();
 
     let articlesHTML = summaries.map(article => {
         let formattedSummary = article.summary
@@ -319,7 +321,7 @@ async function main() {
         return `Article ${article.number}. ${article.title}.\n\n${plainTextSummary}`;
     }).join('\n\nNext Article.\n\n');
 
-    const outputTextFile = "summaries_" + `${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
+    const outputTextFile = filesNamesPrefix + `${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
     fs.writeFileSync(outputTextFile, textContent);
     console.log(`Speech summaries saved to ${outputTextFile}`);
 
@@ -332,7 +334,7 @@ async function main() {
     }
 
     // Generate audio from speech text
-    const audioFile = "summaries_" + `${outputPrefix}_speech_${dateStamp}.mp3`.replace(/\\/g, '/').split('/').pop();
+    const audioFile = filesNamesPrefix + `${outputPrefix}_speech_${dateStamp}.mp3`.replace(/\\/g, '/').split('/').pop();
     await synthesizeLongAudio(outputTextFile, audioFile);
 }
 
