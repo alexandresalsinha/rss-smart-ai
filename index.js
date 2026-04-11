@@ -489,7 +489,7 @@ const analysisPrompt = `
     Format the output as a numbered list.
 `;
 
-async function analyzeWithOpenAI(newsItems, dateStamp) {
+async function analyzeWithOpenAI(newsItems, dateStamp, outputDir) {
     if (!process.env.OPENAI_API_KEY) {
         console.warn('Skipping OpenAI analysis: OPENAI_API_KEY not found in .env');
         return;
@@ -512,12 +512,12 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
-        const analysisFile = `top_news_analysis_${dateStamp}.txt`;
+        const analysisFile = path.join(outputDir, `top_news_analysis_${dateStamp}.txt`);
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = `top_news_analysis_${dateStamp}.html`;
+        const htmlFile = path.join(outputDir, `top_news_analysis_${dateStamp}.html`);
         exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o');
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
@@ -525,11 +525,11 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
         }
 
         // Export to speech-ready text
-        const speechTextFile = `top_news_analysis_speech_${dateStamp}.txt`;
+        const speechTextFile = path.join(outputDir, `top_news_analysis_speech_${dateStamp}.txt`);
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = `top_news_analysis_${dateStamp}.mp3`;
+        const audioFile = path.join(outputDir, `top_news_analysis_${dateStamp}.mp3`);
         await generateAudioFromText(speechTextFile, audioFile);
 
     } catch (err) {
@@ -537,7 +537,7 @@ async function analyzeWithOpenAI(newsItems, dateStamp) {
     }
 }
 
-async function analyzeWithGemini(newsItems, dateStamp) {
+async function analyzeWithGemini(newsItems, dateStamp, outputDir) {
     if (!process.env.GEMINI_API_KEY) {
         console.warn('Skipping Gemini analysis: GEMINI_API_KEY not found in .env');
         return;
@@ -558,12 +558,12 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
-        const analysisFile = `top_news_analysis_gemini_${dateStamp}.txt`;
+        const analysisFile = path.join(outputDir, `top_news_analysis_gemini_${dateStamp}.txt`);
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = `top_news_gemini_${dateStamp}.html`;
+        const htmlFile = path.join(outputDir, `top_news_gemini_${dateStamp}.html`);
         exportToHTML(analysisResult, htmlFile, 'Google Gemini');
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
@@ -571,11 +571,11 @@ async function analyzeWithGemini(newsItems, dateStamp) {
         }
 
         // Export to speech-ready text
-        const speechTextFile = `top_news_analysis_gemini_speech_${dateStamp}.txt`;
+        const speechTextFile = path.join(outputDir, `top_news_analysis_gemini_speech_${dateStamp}.txt`);
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = `top_news_gemini_${dateStamp}.mp3`;
+        const audioFile = path.join(outputDir, `top_news_gemini_${dateStamp}.mp3`);
         await synthesizeLongAudio(speechTextFile, audioFile);
 
     } catch (err) {
@@ -609,7 +609,7 @@ async function synthesizeLongAudio(speechTextFile, audioFile) {
 
     const parent = `projects/${await client.getProjectId()}/locations/global`;
 
-    const outputFileName = audioFile;
+    const outputFileName = path.basename(audioFile);
     const outputGcsUri = `${outputGcsUriPrefix}${outputFileName}`;
 
     const request = {
@@ -641,20 +641,19 @@ async function synthesizeLongAudio(speechTextFile, audioFile) {
 
         // Download the file
         console.log(`Downloading audio file to local directory...`);
-        const localFileName = path.basename(outputGcsUri);
         const options = {
-            destination: localFileName,
+            destination: audioFile,
         };
 
         // Extract bucket and file path from URI (gs://bucket/path/to/file)
         const gcsPath = outputGcsUri.replace(`gs://${bucketName}/`, '');
         await storage.bucket(bucketName).file(gcsPath).download(options);
 
-        console.log(`Successfully downloaded: ${localFileName}`);
+        console.log(`Successfully downloaded: ${audioFile}`);
 
         // Upload to Google Drive if configured
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
-            await uploadToDrive(localFileName);
+            await uploadToDrive(audioFile);
         }
     } catch (err) {
         console.error('ERROR:', err);
@@ -676,19 +675,25 @@ async function main() {
     console.log(`Found ${todaysNews.length} news items from yesterday.`);
 
     const dateStamp = getYesterdayDateStamp();
-    await exportToExcel(todaysNews, `news_yesterday_${dateStamp}.xlsx`);
+    
+    const outputDir = path.join(__dirname, dateStamp);
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    await exportToExcel(todaysNews, path.join(outputDir, `news_yesterday_${dateStamp}.xlsx`));
 
     if (todaysNews.length > 0) {
         // Get the API provider from command line argument
         const apiProvider = process.argv[2]?.toLowerCase() || 'openai';
 
         if (apiProvider === 'gemini') {
-            await analyzeWithGemini(todaysNews, dateStamp);
+            await analyzeWithGemini(todaysNews, dateStamp, outputDir);
         } else if (apiProvider === 'openai') {
-            await analyzeWithOpenAI(todaysNews, dateStamp);
+            await analyzeWithOpenAI(todaysNews, dateStamp, outputDir);
         } else if (apiProvider === 'both') {
-            await analyzeWithOpenAI(todaysNews, dateStamp);
-            await analyzeWithGemini(todaysNews, dateStamp);
+            await analyzeWithOpenAI(todaysNews, dateStamp, outputDir);
+            await analyzeWithGemini(todaysNews, dateStamp, outputDir);
         } else {
             console.error(`Unknown API provider: ${apiProvider}`);
             console.log('Usage: node index.js [openai|gemini|both]');

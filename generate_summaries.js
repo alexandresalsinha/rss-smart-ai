@@ -29,6 +29,15 @@ const argv = yargs(hideBin(process.argv))
 const filesNamesPrefix = 'all_summaries_';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+function getYesterdayDateStamp(date = new Date()) {
+    const yesterday = new Date(date);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const year = yesterday.getFullYear();
+    const month = String(yesterday.getMonth() + 1).padStart(2, '0');
+    const day = String(yesterday.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 async function uploadToDrive(filePath) {
     try {
         console.log(`Uploading ${filePath} to Google Drive...`);
@@ -116,7 +125,7 @@ async function synthesizeLongAudio(speechTextFile, audioFile) {
 
     const parent = `projects/${await client.getProjectId()}/locations/global`;
 
-    const outputFileName = audioFile;
+    const outputFileName = path.basename(audioFile);
     const outputGcsUri = `${outputGcsUriPrefix}${outputFileName}`;
 
     const request = {
@@ -148,20 +157,19 @@ async function synthesizeLongAudio(speechTextFile, audioFile) {
 
         // Download the file
         console.log(`Downloading audio file to local directory...`);
-        const localFileName = path.basename(outputGcsUri);
         const options = {
-            destination: localFileName,
+            destination: audioFile,
         };
 
         // Extract bucket and file path from URI (gs://bucket/path/to/file)
         const gcsPath = outputGcsUri.replace(`gs://${bucketName}/`, '');
         await storage.bucket(bucketName).file(gcsPath).download(options);
 
-        console.log(`Successfully downloaded: ${localFileName}`);
+        console.log(`Successfully downloaded: ${audioFile}`);
 
         // Upload to Google Drive if configured
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
-            await uploadToDrive(localFileName);
+            await uploadToDrive(audioFile);
         }
     } catch (err) {
         console.error('ERROR:', err);
@@ -253,8 +261,15 @@ async function main() {
     }
 
     const outputPrefix = filePath.substring(0, filePath.lastIndexOf('.')) || filePath;
-    const dateStamp = new Date().toISOString().split('T')[0];
-    const outputFile = filesNamesPrefix + `${outputPrefix}_${dateStamp}.html`.replace(/\\/g, '/').split('/').pop();
+    const dateStamp = getYesterdayDateStamp();
+    
+    const outputDir = path.join(__dirname, dateStamp);
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    const outputFileNameBase = filesNamesPrefix + `${outputPrefix}_${dateStamp}`.replace(/\\/g, '/').split('/').pop();
+    const outputFile = path.join(outputDir, outputFileNameBase + '.html');
 
     let articlesHTML = summaries.map(article => {
         let formattedSummary = article.summary
@@ -321,7 +336,7 @@ async function main() {
         return `Article ${article.number}. ${article.title}.\n\n${plainTextSummary}`;
     }).join('\n\nNext Article.\n\n');
 
-    const outputTextFile = filesNamesPrefix + `${outputPrefix}_speech_${dateStamp}.txt`.replace(/\\/g, '/').split('/').pop();
+    const outputTextFile = path.join(outputDir, outputFileNameBase + '_speech.txt');
     fs.writeFileSync(outputTextFile, textContent);
     console.log(`Speech summaries saved to ${outputTextFile}`);
 
@@ -334,7 +349,7 @@ async function main() {
     }
 
     // Generate audio from speech text
-    const audioFile = filesNamesPrefix + `${outputPrefix}_speech_${dateStamp}.mp3`.replace(/\\/g, '/').split('/').pop();
+    const audioFile = path.join(outputDir, outputFileNameBase + '_speech.mp3');
     await synthesizeLongAudio(outputTextFile, audioFile);
 }
 
