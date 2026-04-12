@@ -19,6 +19,8 @@ const openai = new OpenAI({
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const filesNamesPrefix = 'top_news_';
+
 async function readFeeds(filePath) {
     try {
         const data = fs.readFileSync(filePath, 'utf8');
@@ -308,6 +310,7 @@ function exportToSpeechText(analysisText, textFile) {
     cleanText = cleanText.replace(/URL:\s*/g, '');
     cleanText = cleanText.replace(/Description:\s*/g, '');
     cleanText = cleanText.replace(/Title:\s*/g, '');
+    cleanText = cleanText.replace(/Original Number:\s*\d+/ig, '');
 
     // Clean up excessive whitespace and newlines
     cleanText = cleanText.replace(/\n\s*\n\s*\n/g, '\n\n'); // Replace 3+ newlines with 2
@@ -512,12 +515,12 @@ async function analyzeWithOpenAI(newsItems, dateStamp, outputDir) {
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
-        const analysisFile = path.join(outputDir, `top_news_analysis_${dateStamp}.txt`);
+        const analysisFile = path.join(outputDir, `${filesNamesPrefix}${dateStamp}.txt`);
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = path.join(outputDir, `top_news_analysis_${dateStamp}.html`);
+        const htmlFile = path.join(outputDir, `${filesNamesPrefix}${dateStamp}.html`);
         exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o');
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
@@ -525,11 +528,11 @@ async function analyzeWithOpenAI(newsItems, dateStamp, outputDir) {
         }
 
         // Export to speech-ready text
-        const speechTextFile = path.join(outputDir, `top_news_analysis_speech_${dateStamp}.txt`);
+        const speechTextFile = path.join(outputDir, `${filesNamesPrefix}speech_${dateStamp}.txt`);
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = path.join(outputDir, `top_news_analysis_${dateStamp}.mp3`);
+        const audioFile = path.join(outputDir, `${filesNamesPrefix}${dateStamp}.mp3`);
         await generateAudioFromText(speechTextFile, audioFile);
 
     } catch (err) {
@@ -675,7 +678,7 @@ async function main() {
     console.log(`Found ${todaysNews.length} news items from yesterday.`);
 
     const dateStamp = getYesterdayDateStamp();
-    
+
     const outputDir = path.join(__dirname, dateStamp);
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
