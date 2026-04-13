@@ -12,7 +12,6 @@ http://www.wired.co.uk/podcast/rss
 http://gdata.youtube.com/feeds/base/users/TEDtalksDirector/uploads?alt=rss&v=2&orderby=published&client=ytapi-youtube-profile
 http://wdrl.info/feed.xml
 http://pplware.sapo.pt/feed/
-http://www.techmeme.com/feed.xml
 https://www.hackster.io/raspberry-pi/projects.rss
 http://feeds2.feedburner.com/thenextweb
 http://feeds.wired.com/wired/index

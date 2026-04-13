@@ -14,10 +14,10 @@
             "program": "${workspaceFolder}\\generate_summaries.js",
             "args": [
                 "--file",
-                "top_news_gemini_2026-04-04.html",
+                "2026-04-12/top_news_gemini_2026-04-12.html",
                 "--indices",
                 // "1,4,5,7,9,10,13,15,18,21,23, 26,27,29"
-                "1"
+                "8,9,10,11,12,16,18,23,25,26,27,28,29,30"
             ]
         }
     ]

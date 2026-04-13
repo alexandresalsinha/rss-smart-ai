@@ -111,8 +111,8 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
         const geminiTitleMatch = article.match(/\*\*Title:\*\*\s+(.+?)(?:\n|$)/);
         if (geminiTitleMatch) {
             title = geminiTitleMatch[1].trim();
-            // Remove the **Original Number:** line and clean up content
-            content = article.replace(/\*\*Original Number:\*\*\s+\d+\s*\n/, '');
+            // Keep the **Original Number:** line in HTML
+            content = article;
         } else {
             // For OpenAI format: extract title from the first line
             const titleMatch = article.match(/\d+\.\s+(.+?)(?:\n|$)/);
