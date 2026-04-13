@@ -561,12 +561,12 @@ async function analyzeWithGemini(newsItems, dateStamp, outputDir) {
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
-        const analysisFile = path.join(outputDir, `top_news_analysis_gemini_${dateStamp}.txt`);
+        const analysisFile = path.join(outputDir, `${filesNamesPrefix}analysis_gemini_${dateStamp}.txt`);
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = path.join(outputDir, `top_news_gemini_${dateStamp}.html`);
+        const htmlFile = path.join(outputDir, `${filesNamesPrefix}gemini_${dateStamp}.html`);
         exportToHTML(analysisResult, htmlFile, 'Google Gemini');
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
@@ -574,11 +574,11 @@ async function analyzeWithGemini(newsItems, dateStamp, outputDir) {
         }
 
         // Export to speech-ready text
-        const speechTextFile = path.join(outputDir, `top_news_analysis_gemini_speech_${dateStamp}.txt`);
+        const speechTextFile = path.join(outputDir, `${filesNamesPrefix}analysis_gemini_speech_${dateStamp}.txt`);
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = path.join(outputDir, `top_news_gemini_${dateStamp}.mp3`);
+        const audioFile = path.join(outputDir, `${filesNamesPrefix}gemini_${dateStamp}.mp3`);
         await synthesizeLongAudio(speechTextFile, audioFile);
 
     } catch (err) {
