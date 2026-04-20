@@ -262,7 +262,7 @@ async function main() {
 
     const outputPrefix = filePath.substring(0, filePath.lastIndexOf('.')) || filePath;
     const dateStamp = getYesterdayDateStamp();
-    
+
     const outputDir = path.join(__dirname, dateStamp);
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
@@ -271,7 +271,7 @@ async function main() {
     const outputFileNameBase = filesNamesPrefix + `${outputPrefix}_${dateStamp}`.replace(/\\/g, '/').split('/').pop();
     const outputFile = path.join(outputDir, outputFileNameBase + '.html');
 
-    let articlesHTML = summaries.map(article => {
+    let articlesHTML = summaries.map((article, index) => {
         let formattedSummary = article.summary
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -281,7 +281,7 @@ async function main() {
 
         return `
         <div class="article">
-            <div class="article-number">${article.number}</div>
+            <div class="article-number">${index + 1}</div>
             <h3 class="article-title">${article.title}</h3>
             <div class="article-content">${formattedSummary}</div>
             <a href="${article.url}" target="_blank" class="article-link">Original Article →</a>
@@ -326,14 +326,14 @@ async function main() {
 </body>
 </html>`;
 
-    let textContent = summaries.map(article => {
+    let textContent = summaries.map((article, index) => {
         let plainTextSummary = article.summary
             .replace(/\*\*/g, '')
             .replace(/\*/g, '')
             .replace(/#/g, '')
             .replace(/[\-\+]\s/g, '')
             .trim();
-        return `Article ${article.number}. ${article.title}.\n\n${plainTextSummary}`;
+        return `Article ${index + 1}. ${article.title}.\n\n${plainTextSummary}`;
     }).join('\n\nNext Article.\n\n');
 
     const outputTextFile = path.join(outputDir, outputFileNameBase + '_speech.txt');
