@@ -195,7 +195,41 @@ async function extractTextFromUrl(url) {
     }
 }
 
+async function validateDriveToken() {
+    if (!process.env.GOOGLE_DRIVE_FOLDER_ID || process.env.GOOGLE_DRIVE_FOLDER_ID === 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
+        console.log('Google Drive upload not configured, skipping token validation.');
+        return;
+    }
+
+    console.log('Validating Google Drive refresh token...');
+
+    const oauth2Client = new google.auth.OAuth2(
+        process.env.GOOGLE_CLIENT_ID,
+        process.env.GOOGLE_CLIENT_SECRET,
+        'urn:ietf:wg:oauth:2.0:oob'
+    );
+
+    oauth2Client.setCredentials({
+        refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+    });
+
+    try {
+        const drive = google.drive({ version: 'v3', auth: oauth2Client });
+        await drive.files.list({ pageSize: 1, fields: 'files(id)' });
+        console.log('✓ Google Drive refresh token is valid.');
+    } catch (err) {
+        console.error('✗ Google Drive refresh token validation FAILED:', err.message);
+        if (err.response && err.response.data) {
+            console.error('Detailed Error:', JSON.stringify(err.response.data, null, 2));
+        }
+        console.error('\nPlease refresh your token by running: node generate_token.js');
+        process.exit(1);
+    }
+}
+
 async function main() {
+    await validateDriveToken();
+
     const filePath = path.resolve(argv.file);
     if (!fs.existsSync(filePath)) {
         console.error(`File not found: ${filePath}`);
