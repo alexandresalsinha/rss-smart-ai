@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "index": "node index.js gemini"
+    "index": "node index.js gemini",
+    "generate-summaries": "node generate_summaries.js --file \"2026-05-02\\_top_news_gemini_2026-05-02.html\" --indices \"4,6,9,10,26,28,29,30\" --folderUpload \"2026-05-02\""
   },
   "keywords": [],
   "author": "",

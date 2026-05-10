@@ -21,6 +21,12 @@ const argv = yargs(hideBin(process.argv))
         type: 'string',
         demandOption: true
     })
+    .option('folderUpload', {
+        alias: 'u',
+        description: 'Google Drive folder name to upload files to',
+        type: 'string',
+        demandOption: false
+    })
     .help()
     .alias('help', 'h')
     .argv;
@@ -38,7 +44,7 @@ function getYesterdayDateStamp(date = new Date()) {
     return `${year}-${month}-${day}`;
 }
 
-async function uploadToDrive(filePath) {
+async function uploadToDrive(filePath, folderUploadName) {
     try {
         console.log(`Uploading ${filePath} to Google Drive...`);
 
@@ -54,17 +60,50 @@ async function uploadToDrive(filePath) {
 
         const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
-        let folderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+        const baseFolderId = process.env.GOOGLE_DRIVE_FOLDER_ID.trim();
+        let folderId = baseFolderId;
 
-        try {
-            if (fs.existsSync('daily_folder_id.txt')) {
-                const dailyId = fs.readFileSync('daily_folder_id.txt', 'utf8').trim();
-                if (dailyId) {
-                    folderId = dailyId;
+        if (folderUploadName) {
+            // Search for existing folder with the given name
+            try {
+                const res = await drive.files.list({
+                    q: `name = '${folderUploadName}' and '${baseFolderId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
+                    fields: 'files(id, name)',
+                    supportsAllDrives: true,
+                    includeItemsFromAllDrives: true,
+                });
+
+                if (res.data.files && res.data.files.length > 0) {
+                    folderId = res.data.files[0].id;
+                    console.log(`Found existing folder '${folderUploadName}' in Google Drive.`);
+                } else {
+                    console.log(`Creating folder '${folderUploadName}' in Google Drive...`);
+                    const folderMetadata = {
+                        name: folderUploadName,
+                        mimeType: 'application/vnd.google-apps.folder',
+                        parents: [baseFolderId]
+                    };
+                    const folder = await drive.files.create({
+                        requestBody: folderMetadata,
+                        fields: 'id',
+                        supportsAllDrives: true,
+                    });
+                    folderId = folder.data.id;
                 }
+            } catch (folderErr) {
+                console.error(`Error finding or creating folder '${folderUploadName}'. Falling back to base folder:`, folderErr.message);
             }
-        } catch (e) {
-            console.error('Could not read daily_folder_id.txt:', e.message);
+        } else {
+            try {
+                if (fs.existsSync('daily_folder_id.txt')) {
+                    const dailyId = fs.readFileSync('daily_folder_id.txt', 'utf8').trim();
+                    if (dailyId) {
+                        folderId = dailyId;
+                    }
+                }
+            } catch (e) {
+                console.error('Could not read daily_folder_id.txt:', e.message);
+            }
         }
 
         const fileMetadata = {
@@ -169,7 +208,7 @@ async function synthesizeLongAudio(speechTextFile, audioFile) {
 
         // Upload to Google Drive if configured
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
-            await uploadToDrive(audioFile);
+            await uploadToDrive(audioFile, argv.folderUpload);
         }
     } catch (err) {
         console.error('ERROR:', err);
@@ -379,7 +418,7 @@ async function main() {
 
     // Upload HTML to Google Drive if configured
     if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
-        await uploadToDrive(outputFile);
+        await uploadToDrive(outputFile, argv.folderUpload);
     }
 
     // Generate audio from speech text
