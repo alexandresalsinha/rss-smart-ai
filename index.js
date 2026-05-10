@@ -19,7 +19,16 @@ const openai = new OpenAI({
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const filesNamesPrefix = 'top_news_';
+const filesNamesPrefix = '_top_news_';
+const openaiAnalysisPrefix = `${filesNamesPrefix}`;
+const openaiHtmlPrefix = `${filesNamesPrefix}`;
+const openaiSpeechPrefix = `${filesNamesPrefix}speech_`;
+const openaiAudioPrefix = `${filesNamesPrefix}`;
+const geminiAnalysisPrefix = `${filesNamesPrefix}analysis_gemini_`;
+const geminiHtmlPrefix = `${filesNamesPrefix}gemini_`;
+const geminiSpeechPrefix = `${filesNamesPrefix}analysis_gemini_speech_`;
+const geminiAudioPrefix = `${filesNamesPrefix}gemini_`;
+const excelPrefix = 'news_yesterday_';
 
 async function readFeeds(filePath) {
     try {
@@ -515,12 +524,12 @@ async function analyzeWithOpenAI(newsItems, dateStamp, outputDir) {
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
-        const analysisFile = path.join(outputDir, `${filesNamesPrefix}${dateStamp}.txt`);
+        const analysisFile = path.join(outputDir, `${openaiAnalysisPrefix}${dateStamp}.txt`);
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = path.join(outputDir, `${filesNamesPrefix}${dateStamp}.html`);
+        const htmlFile = path.join(outputDir, `${openaiHtmlPrefix}${dateStamp}.html`);
         exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o');
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
@@ -528,11 +537,11 @@ async function analyzeWithOpenAI(newsItems, dateStamp, outputDir) {
         }
 
         // Export to speech-ready text
-        const speechTextFile = path.join(outputDir, `${filesNamesPrefix}speech_${dateStamp}.txt`);
+        const speechTextFile = path.join(outputDir, `${openaiSpeechPrefix}${dateStamp}.txt`);
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = path.join(outputDir, `${filesNamesPrefix}${dateStamp}.mp3`);
+        const audioFile = path.join(outputDir, `${openaiAudioPrefix}${dateStamp}.mp3`);
         await generateAudioFromText(speechTextFile, audioFile);
 
     } catch (err) {
@@ -561,12 +570,12 @@ async function analyzeWithGemini(newsItems, dateStamp, outputDir) {
         console.log(analysisResult);
         console.log('\n------------------------------\n');
 
-        const analysisFile = path.join(outputDir, `${filesNamesPrefix}analysis_gemini_${dateStamp}.txt`);
+        const analysisFile = path.join(outputDir, `${geminiAnalysisPrefix}${dateStamp}.txt`);
         fs.writeFileSync(analysisFile, analysisResult);
         console.log(`Analysis saved to ${analysisFile}`);
 
         // Export to HTML
-        const htmlFile = path.join(outputDir, `${filesNamesPrefix}gemini_${dateStamp}.html`);
+        const htmlFile = path.join(outputDir, `${geminiHtmlPrefix}${dateStamp}.html`);
         exportToHTML(analysisResult, htmlFile, 'Google Gemini');
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
@@ -574,11 +583,11 @@ async function analyzeWithGemini(newsItems, dateStamp, outputDir) {
         }
 
         // Export to speech-ready text
-        const speechTextFile = path.join(outputDir, `${filesNamesPrefix}analysis_gemini_speech_${dateStamp}.txt`);
+        const speechTextFile = path.join(outputDir, `${geminiSpeechPrefix}${dateStamp}.txt`);
         exportToSpeechText(analysisResult, speechTextFile);
 
         // Generate audio from speech text
-        const audioFile = path.join(outputDir, `${filesNamesPrefix}gemini_${dateStamp}.mp3`);
+        const audioFile = path.join(outputDir, `${geminiAudioPrefix}${dateStamp}.mp3`);
         await synthesizeLongAudio(speechTextFile, audioFile);
 
     } catch (err) {
@@ -718,7 +727,7 @@ async function main() {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    await exportToExcel(todaysNews, path.join(outputDir, `news_yesterday_${dateStamp}.xlsx`));
+    await exportToExcel(todaysNews, path.join(outputDir, `${excelPrefix}${dateStamp}.xlsx`));
 
     if (todaysNews.length > 0) {
         // Get the API provider from command line argument
