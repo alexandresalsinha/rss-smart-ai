@@ -32,7 +32,7 @@ const argv = yargs(hideBin(process.argv))
     .argv;
 
 
-const filesNamesPrefix = 'all_summaries_';
+const filesNamesPrefix = '2__all_summaries_';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 function getYesterdayDateStamp(date = new Date()) {
@@ -275,6 +275,17 @@ async function main() {
         process.exit(1);
     }
 
+    // Extract date from input filename (expects YYYY-MM-DD pattern)
+    const inputFileName = path.basename(filePath);
+    const dateMatch = inputFileName.match(/(\d{4}-\d{2}-\d{2})/);
+    let concerningDate = 'Unknown date';
+    let extractedDateStamp = getYesterdayDateStamp(); // fallback
+    if (dateMatch) {
+        extractedDateStamp = dateMatch[1];
+        const parsedDate = new Date(extractedDateStamp + 'T00:00:00');
+        concerningDate = parsedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
     const targetIndices = argv.indices.split(',').map(n => parseInt(n.trim(), 10)).filter(n => !isNaN(n));
     console.log(`Processing indices: ${targetIndices.join(', ')} from file: ${argv.file}`);
 
@@ -334,14 +345,13 @@ async function main() {
     }
 
     const outputPrefix = filePath.substring(0, filePath.lastIndexOf('.')) || filePath;
-    const dateStamp = getYesterdayDateStamp();
 
-    const outputDir = path.join(__dirname, dateStamp);
+    const outputDir = path.join(__dirname, extractedDateStamp);
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    const outputFileNameBase = filesNamesPrefix + `${outputPrefix}_${dateStamp}`.replace(/\\/g, '/').split('/').pop();
+    const outputFileNameBase = filesNamesPrefix + `${outputPrefix}_${extractedDateStamp}`.replace(/\\/g, '/').split('/').pop();
     const outputFile = path.join(outputDir, outputFileNameBase + '.html');
 
     let articlesHTML = summaries.map((article, index) => {
@@ -389,7 +399,7 @@ async function main() {
     <div class="container">
         <div class="header">
             <h1>📄 Detailed Summaries</h1>
-            <div class="date">Generated on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+            <div class="date">Concerning date ${concerningDate}</div>
         </div>
         <div class="articles">
             ${articlesHTML}
