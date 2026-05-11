@@ -32,7 +32,7 @@ const argv = yargs(hideBin(process.argv))
     .argv;
 
 
-const filesNamesPrefix = '2__all_summaries_';
+const filesNamesPrefix = 'all_summaries_';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 function getYesterdayDateStamp(date = new Date()) {
