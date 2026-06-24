@@ -327,7 +327,7 @@ async function main() {
         //     ? `Please summarize the following article in a comprehensive paragraph. \n\nTitle: ${article.title}\nURL: ${article.url}\n\nArticle Text:\n${contentToSummarize}`
         //     : `Please provide a comprehensive summary of the article at this URL, based on the title and your knowledge. \n\nTitle: ${article.title}\nURL: ${article.url}`;
 
-        const prompt = `summarize this url "${article.url}" by giving the TL;DR and Key Takeaways in bullet points.`;
+        const prompt = `summarize this url "${article.url}" by giving the TL;DR and Key Takeaways in bullet points. Convert all dollar values to euros (€) using the current exchange rate.`;
 
 
         try {

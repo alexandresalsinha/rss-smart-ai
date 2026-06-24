@@ -19,7 +19,7 @@ const openai = new OpenAI({
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const filesNamesPrefix = '_top_news_';
+const filesNamesPrefix = 'top_news_';
 const openaiAnalysisPrefix = `${filesNamesPrefix}`;
 const openaiHtmlPrefix = `${filesNamesPrefix}`;
 const openaiSpeechPrefix = `${filesNamesPrefix}speech_`;
@@ -488,14 +488,16 @@ const analysisPrompt = `
     - intuitive surgical
     - constellation energy
     - first solar
-    
     - schneider electric
+
     I'm not interested in these kinds of articles:
+    - All Apple related news
     - Gadgets that aren't innovative
     - Marketing or salesy press releases
     - Minor product updates
     - Articles that are trying to sell me something (unless what they're selling is super cool)
 
+    Convert all dollar values to euros (€) using the current exchange rate. 
     If there isn't enough information in the title and summary to decide if the article would be interesting to me, search for information on the topic to decide. 
     
     Format the output as a numbered list.
