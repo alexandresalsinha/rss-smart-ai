@@ -468,16 +468,14 @@ const analysisPrompt = `
 
     Please identify the Top 30 most significant news items from this list.
     For each item, provide:
-    - The original number from the list
     - The Title
     - The Description
-    - A brief reason why it is significant.
     - The URL
     
 
     You are helping me decide if this article is something I would be interested in reading. I am Alexandre Salsinha. 
     I am interested in artificial intelligence, music technology, technology, gadgets, drones, vibe coding, investment markets, robotics, computer programming,  
-    technology ,Cryptocurrency, music production, drones, life hacks, productivity tips and apps, IT Security,  Virtual Reality and augmented really, and finally,health breakthroughs . 
+    technology ,Cryptocurrency, music production, drones, life hacks, productivity tips and apps, IT Security,  Virtual Reality and augmented really, and finally,health breakthroughs and very important world news. 
     I am also interested in any new developments with ChatGPT, Gemini, Claude, MCP, and Perplexity. I'm very interested in when AI collides with society in interesting ways, or cool stuff that everyday people can do with AI.
 
     If there is a news about this compannies, I would be interested in reading it, and put it in the top of the list:
