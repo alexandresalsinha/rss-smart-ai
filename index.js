@@ -110,7 +110,7 @@ async function exportToExcel(newsItems, outputFile) {
     console.log(`Exported ${newsItems.length} news items to ${outputFile}`);
 }
 
-function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
+function exportToHTML(analysisText, htmlFile, provider = 'OpenAI', dateStamp = formatDateDMY(new Date())) {
     // Parse articles from the text - split by numbered items
     const articleMatches = analysisText.match(/\d+\.\s+.+?(?=\n\d+\.|$)/gs) || [];
     const articlesHTML = articleMatches.map((article, index) => {
@@ -295,7 +295,7 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
     <div class="container">
         <div class="header">
             <h1>📰 Top News of the Day</h1>
-            <div class="date">Generated on ${formatDateDMY(new Date())}</div>
+            <div class="date">Generated on ${dateStamp}</div>
         </div>
         <div class="articles">
             ${articlesHTML}
@@ -531,7 +531,7 @@ async function analyzeWithOpenAI(newsItems, dateStamp, outputDir) {
 
         // Export to HTML
         const htmlFile = path.join(outputDir, `${openaiHtmlPrefix}${dateStamp}.html`);
-        exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o');
+        exportToHTML(analysisResult, htmlFile, 'OpenAI GPT-4o', dateStamp);
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
             await uploadToDrive(htmlFile);
@@ -577,7 +577,7 @@ async function analyzeWithGemini(newsItems, dateStamp, outputDir) {
 
         // Export to HTML
         const htmlFile = path.join(outputDir, `${geminiHtmlPrefix}${dateStamp}.html`);
-        exportToHTML(analysisResult, htmlFile, 'Google Gemini');
+        exportToHTML(analysisResult, htmlFile, 'Google Gemini', dateStamp);
 
         if (process.env.GOOGLE_DRIVE_FOLDER_ID && process.env.GOOGLE_DRIVE_FOLDER_ID !== 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE') {
             await uploadToDrive(htmlFile);
