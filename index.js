@@ -70,20 +70,21 @@ function isYesterday(date) {
         date.getFullYear() === yesterday.getFullYear();
 }
 
-function getDateStamp(date = new Date()) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+function formatDateDMY(date) {
     const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+function getDateStamp(date = new Date()) {
+    return formatDateDMY(date);
 }
 
 function getYesterdayDateStamp(date = new Date()) {
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
-    const year = yesterday.getFullYear();
-    const month = String(yesterday.getMonth() + 1).padStart(2, '0');
-    const day = String(yesterday.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return formatDateDMY(yesterday);
 }
 async function exportToExcel(newsItems, outputFile) {
     const workbook = new ExcelJS.Workbook();
@@ -101,7 +102,7 @@ async function exportToExcel(newsItems, outputFile) {
             title: item.title,
             description: item.description,
             url: item.url,
-            date: item.date.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+            date: formatDateDMY(item.date) // Format date as DD-MM-YYYY
         });
     });
 
@@ -294,7 +295,7 @@ function exportToHTML(analysisText, htmlFile, provider = 'OpenAI') {
     <div class="container">
         <div class="header">
             <h1>📰 Top News of the Day</h1>
-            <div class="date">Generated on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+            <div class="date">Generated on ${formatDateDMY(new Date())}</div>
         </div>
         <div class="articles">
             ${articlesHTML}
@@ -510,7 +511,7 @@ async function analyzeWithOpenAI(newsItems, dateStamp, outputDir) {
     console.log('Analyzing news with OpenAI to find the Top 30...');
 
     // Prepare a simplified list for the prompt to save tokens
-    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${item.date.toISOString().split('T')[0]}) - ${item.url}`).join('\n');
+    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${formatDateDMY(item.date)}) - ${item.url}`).join('\n');
     const prompt = analysisPrompt.replace('{newsList}', newsList);
 
     try {
@@ -558,7 +559,7 @@ async function analyzeWithGemini(newsItems, dateStamp, outputDir) {
     console.log('Analyzing news with Google Gemini to find the Top 30...');
 
     // Prepare a simplified list for the prompt to save tokens
-    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${item.date.toISOString().split('T')[0]}) - ${item.url}`).join('\n');
+    const newsList = newsItems.map((item, index) => `${index + 1}. ${item.title} (${formatDateDMY(item.date)}) - ${item.url}`).join('\n');
     const prompt = analysisPrompt.replace('{newsList}', newsList);
 
     try {
