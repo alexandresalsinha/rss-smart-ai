@@ -4,6 +4,7 @@
 *.txt
 *.wav
 gen-lang-client-0664784003-408acc5592e9.json
+seen_news.json
 # Logs
 logs
 *.log

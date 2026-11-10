@@ -74,12 +74,10 @@ http://www.uploadvr.com/feed/
 http://www.sciencedaily.com/rss/computers_math/virtual_reality.xml
 http://www.popularmechanics.co.za/feed/
 http://feeds.feedburner.com/darknethackers
-http://feeds2.feedburner.com/thenextweb
 https://channel9.msdn.com/Tags/rss/RSS
 http://feeds.feedburner.com/DeveloperDrive
 http://www.sciencedaily.com/rss/computers_math/computer_programming.xml
 http://thehackernews.com/feeds/posts/default
-http://wdrl.info/feed.xml
 https://www.wired.com/feed/
 https://voicetechpodcast.com/feed/
 https://www.coindesk.com/arc/outboundfeeds/rss/
@@ -90,7 +88,6 @@ https://research.glassnode.com/rss/
 https://cryptoslate.com/feed/
 https://feeds.bloomberg.com/crypto/news.rss
 https://www.ft.com/crypto?format=rss
-http://feeds.marketwatch.com/marketwatch/realtimeheadlines
 https://www.investors.com/category/market-trend/the-big-picture/feed
 https://search.cnbc.com/rs/search/combinedsideffects?service=rss&id=100003114
 https://feeds.content.dowjones.io/public/rss/barrons_realtime
@@ -102,7 +99,6 @@ https://seekingalpha.com/feed.xml
 https://alphai.io/research/rss.xml
 https://alephblog.com/category/macroeconomics/feed/
 http://feeds.marketwatch.com/marketwatch/topstories
-http://feeds.marketwatch.com/marketwatch/realtimeheadlines
 http://feeds.marketwatch.com/marketwatch/marketpulse
 http://feeds.marketwatch.com/marketwatch/StockstoWatch
 https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069
@@ -111,7 +107,6 @@ https://www.investing.com/rss/news_25.rss
 https://www.investing.com/rss/news_1065.rss
 https://www.investors.com/feed/
 https://www.investors.com/category/market-trend/the-big-picture/feed/
-https://seekingalpha.com/feed.xml
 https://seekingalpha.com/market_currents.xml
 https://www.connectmoney.com/feed?story-market=markets
 https://www.connectmoney.com/feed?story-market=etfs
