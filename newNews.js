@@ -61,7 +61,7 @@ const analysisPrompt = `
     Convert all dollar values to euros (€) using the current exchange rate.
     If there isn't enough information in the title and summary to decide if the article would be interesting to me, search for information on the topic to decide.
 
-    Format the output as a numbered list. Only output that numbered list and nothing else.
+    Format the output as a numbered list. Only output the numbered list and nothing else before or after it.
 `;
 
 async function readFeeds(filePath) {
