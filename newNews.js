@@ -144,28 +144,35 @@ async function analyzeWithGemini(newsItems) {
     }
 }
 
-async function sendAnalysisEmail(analysisText, newNews) {
+function parseAnalysisItems(analysisText) {
+    const itemRegex = /\*\*Title:\*\*\s*([\s\S]*?)\s*\*\*Description:\*\*\s*([\s\S]*?)\s*\*\*URL:\*\*\s*(\S+)/g;
+    const items = [];
+    let match;
+    while ((match = itemRegex.exec(analysisText)) !== null) {
+        items.push({
+            title: match[1].trim(),
+            description: match[2].trim(),
+            url: match[3].trim()
+        });
+    }
+    return items;
+}
+
+async function sendAnalysisItemEmail(item) {
     if (!mailTransporter) {
         console.warn('Skipping email: GMAIL_USER or GMAIL_APP_PASSWORD not found in .env');
         return;
     }
 
-    const now = new Date();
-    const timeLabel = `${formatDateDMY(now)} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-    const htmlBody = analysisText
-        .split('\n')
-        .map(line => line.trim())
-        .join('<br>');
-
     try {
         await mailTransporter.sendMail({
             from: process.env.GMAIL_USER,
             to: EMAIL_RECIPIENT,
-            subject: `Gemini News Analysis - ${timeLabel} (${newNews.length} new item(s))`,
-            text: analysisText,
-            html: `<div>${htmlBody}</div>`
+            subject: item.title,
+            text: `${item.description}\n\n${item.url}`,
+            html: `<p>${item.description}</p><p><a href="${item.url}">${item.url}</a></p>`
         });
-        console.log(`Analysis email sent to ${EMAIL_RECIPIENT}.`);
+        console.log(`Analysis email sent to ${EMAIL_RECIPIENT}: ${item.title}`);
     } catch (err) {
         console.error('Error sending analysis email:', err.message);
     }
@@ -197,7 +204,10 @@ async function main() {
 
     const analysisText = await analyzeWithGemini(newNews);
     if (analysisText) {
-        await sendAnalysisEmail(analysisText, newNews);
+        const analysisItems = parseAnalysisItems(analysisText);
+        for (const item of analysisItems) {
+            await sendAnalysisItemEmail(item);
+        }
     }
 
     newNews.forEach(item => seenUrls.add(item.url));
