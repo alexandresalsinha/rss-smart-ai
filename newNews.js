@@ -5,16 +5,32 @@ const fs = require('fs');
 const Parser = require('rss-parser');
 require('dotenv').config();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const nodemailer = require('nodemailer');
 
 const parser = new Parser({ timeout: 15000 });
 const seenFile = path.join(__dirname, 'seen_news.json');
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const RUN_INTERVAL_MS = 5 * 60 * 1000;
+const EMAIL_RECIPIENT = '2alexandresalsinha@gmail.com';
+
+const mailTransporter = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD
+    ? nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_APP_PASSWORD
+        }
+    })
+    : null;
+
 const analysisPrompt = `
     Here is a list of news headlines from today:
     {newsList}
 
+    Please identify the Top 5 most significant news items from this list.
+    
     For each item, provide:
     - The Title
     - The Description
@@ -22,8 +38,7 @@ const analysisPrompt = `
 
 
     You are helping me decide if this article is something I would be interested in reading. I am Alexandre Salsinha.
-    I am interested in artificial intelligence, music technology, technology, gadgets, drones, vibe coding, investment markets, robotics, computer programming,
-    technology ,Cryptocurrency, music production, drones, life hacks, productivity tips and apps, IT Security (only the 3 most important ones),  Virtual Reality and augmented really, and finally,health breakthroughs and very important world news.
+    I am interested in investment markets, cryptocurrency, and finally,health breakthroughs and very important world news.
     I am also interested in any new developments with ChatGPT, Gemini, Claude, MCP, and Perplexity. I'm very interested in when AI collides with society in interesting ways, or cool stuff that everyday people can do with AI.
 
     If there is a news about this compannies, I would be interested in reading it, and put it in the top of the list:
@@ -46,7 +61,7 @@ const analysisPrompt = `
     Convert all dollar values to euros (€) using the current exchange rate.
     If there isn't enough information in the title and summary to decide if the article would be interesting to me, search for information on the topic to decide.
 
-    Format the output as a numbered list.
+    Format the output as a numbered list. Only output that numbered list and nothing else.
 `;
 
 async function readFeeds(filePath) {
@@ -105,7 +120,7 @@ function saveSeen(seenUrls) {
 async function analyzeWithGemini(newsItems) {
     if (!process.env.GEMINI_API_KEY) {
         console.warn('Skipping Gemini analysis: GEMINI_API_KEY not found in .env');
-        return;
+        return null;
     }
 
     console.log('Filtering new news with Google Gemini...');
@@ -121,8 +136,38 @@ async function analyzeWithGemini(newsItems) {
         console.log('\n--- New News Filtered by Gemini ---\n');
         console.log(analysisResult);
         console.log('\n------------------------------\n');
+
+        return analysisResult;
     } catch (err) {
         console.error('Error during Gemini analysis:', err.message);
+        return null;
+    }
+}
+
+async function sendAnalysisEmail(analysisText, newNews) {
+    if (!mailTransporter) {
+        console.warn('Skipping email: GMAIL_USER or GMAIL_APP_PASSWORD not found in .env');
+        return;
+    }
+
+    const now = new Date();
+    const timeLabel = `${formatDateDMY(now)} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const htmlBody = analysisText
+        .split('\n')
+        .map(line => line.trim())
+        .join('<br>');
+
+    try {
+        await mailTransporter.sendMail({
+            from: process.env.GMAIL_USER,
+            to: EMAIL_RECIPIENT,
+            subject: `Gemini News Analysis - ${timeLabel} (${newNews.length} new item(s))`,
+            text: analysisText,
+            html: `<div>${htmlBody}</div>`
+        });
+        console.log(`Analysis email sent to ${EMAIL_RECIPIENT}.`);
+    } catch (err) {
+        console.error('Error sending analysis email:', err.message);
     }
 }
 
@@ -150,10 +195,31 @@ async function main() {
         console.log(`   ${item.url}\n`);
     });
 
-    // await analyzeWithGemini(newNews);
+    const analysisText = await analyzeWithGemini(newNews);
+    if (analysisText) {
+        await sendAnalysisEmail(analysisText, newNews);
+    }
 
     newNews.forEach(item => seenUrls.add(item.url));
     saveSeen(seenUrls);
 }
 
-main();
+let isRunning = false;
+
+async function runMain() {
+    if (isRunning) {
+        console.warn('Previous run still in progress, skipping this tick.');
+        return;
+    }
+    isRunning = true;
+    try {
+        await main();
+    } catch (err) {
+        console.error('Error during run:', err);
+    } finally {
+        isRunning = false;
+    }
+}
+
+runMain();
+setInterval(runMain, RUN_INTERVAL_MS);
